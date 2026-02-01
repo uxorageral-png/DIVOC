@@ -14,6 +14,7 @@ export const translations = {
     // Navigation
     nav: {
       home: 'Início',
+      products: 'Produtos',
       allProducts: 'Todos os Produtos',
       hoodies: 'Hoodies',
       tshirts: 'T-Shirts',
@@ -129,6 +130,7 @@ export const translations = {
   en: {
     nav: {
       home: 'Home',
+      products: 'Products',
       allProducts: 'All Products',
       hoodies: 'Hoodies',
       tshirts: 'T-Shirts',
@@ -234,6 +236,7 @@ export const translations = {
   fr: {
     nav: {
       home: 'Accueil',
+      products: 'Produits',
       allProducts: 'Tous les Produits',
       hoodies: 'Hoodies',
       tshirts: 'T-Shirts',
