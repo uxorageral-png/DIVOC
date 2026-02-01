@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
+import ProductsPage from "./pages/ProductsPage";
+import HoodiesPage from "./pages/HoodiesPage";
+import TShirtsPage from "./pages/TShirtsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -17,6 +20,9 @@ function AppContent() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/hoodies" element={<HoodiesPage />} />
+        <Route path="/products/tshirts" element={<TShirtsPage />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
