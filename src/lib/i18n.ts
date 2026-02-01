@@ -80,6 +80,7 @@ export const translations = {
       checkout: 'Finalizar Compra',
       remove: 'Remover',
       continueShopping: 'Continuar a Comprar',
+      added: 'Adicionado ao carrinho',
     },
     // Product Detail
     product: {
@@ -190,6 +191,7 @@ export const translations = {
       checkout: 'Checkout',
       remove: 'Remove',
       continueShopping: 'Continue Shopping',
+      added: 'Added to cart',
     },
     product: {
       size: 'Size',
@@ -296,6 +298,7 @@ export const translations = {
       checkout: 'Passer à la Caisse',
       remove: 'Supprimer',
       continueShopping: 'Continuer les Achats',
+      added: 'Ajouté au panier',
     },
     product: {
       size: 'Taille',
