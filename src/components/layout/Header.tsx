@@ -161,10 +161,43 @@ export function Header() {
             </DropdownMenu>
 
             {/* Account */}
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-              <User className="h-5 w-5" />
-              <span className="sr-only">{t.nav.account}</span>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                  <User className="h-5 w-5" />
+                  <span className="sr-only">{t.nav.account}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-card border-border">
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <a 
+                    href="https://divoc-identity-2ev3w.myshopify.com/account/login" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    {t.nav.login}
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <a 
+                    href="https://divoc-identity-2ev3w.myshopify.com/account/register" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    {t.nav.register}
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <a 
+                    href="https://divoc-identity-2ev3w.myshopify.com/account" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    {t.nav.myAccount}
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Cart */}
             <CartDrawer />
