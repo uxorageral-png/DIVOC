@@ -3,7 +3,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
 import ProductsPage from "./pages/ProductsPage";
@@ -34,15 +33,13 @@ function AppContent() {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <div className="dark">
-          <AppContent />
-        </div>
-      </TooltipProvider>
-    </LanguageProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <div className="dark">
+        <AppContent />
+      </div>
+    </TooltipProvider>
   </QueryClientProvider>
 );
 
