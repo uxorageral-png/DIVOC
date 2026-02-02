@@ -23,6 +23,9 @@ export const translations = {
       faq: 'FAQ',
       cart: 'Carrinho',
       account: 'Conta',
+      login: 'Entrar',
+      register: 'Registar',
+      myAccount: 'Minha Conta',
       wishlist: 'Lista de Desejos',
     },
     // Hero Section
@@ -140,6 +143,9 @@ export const translations = {
       faq: 'FAQ',
       cart: 'Cart',
       account: 'Account',
+      login: 'Login',
+      register: 'Register',
+      myAccount: 'My Account',
       wishlist: 'Wishlist',
     },
     hero: {
@@ -247,6 +253,9 @@ export const translations = {
       faq: 'FAQ',
       cart: 'Panier',
       account: 'Compte',
+      login: 'Connexion',
+      register: 'S\'inscrire',
+      myAccount: 'Mon Compte',
       wishlist: 'Liste de Souhaits',
     },
     hero: {
