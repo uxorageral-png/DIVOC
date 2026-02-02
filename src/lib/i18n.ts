@@ -89,6 +89,7 @@ export const translations = {
     product: {
       size: 'Tamanho',
       color: 'Cor',
+      quantity: 'Quantidade',
       addToWishlist: 'Adicionar à Lista de Desejos',
       removeFromWishlist: 'Remover da Lista de Desejos',
       description: 'Descrição',
@@ -202,6 +203,7 @@ export const translations = {
     product: {
       size: 'Size',
       color: 'Color',
+      quantity: 'Quantity',
       addToWishlist: 'Add to Wishlist',
       removeFromWishlist: 'Remove from Wishlist',
       description: 'Description',
@@ -312,6 +314,7 @@ export const translations = {
     product: {
       size: 'Taille',
       color: 'Couleur',
+      quantity: 'Quantité',
       addToWishlist: 'Ajouter aux Souhaits',
       removeFromWishlist: 'Retirer des Souhaits',
       description: 'Description',

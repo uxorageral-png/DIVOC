@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Loader2, ShoppingBag, ChevronLeft, Heart } from 'lucide-react';
+import { Loader2, ShoppingBag, ChevronLeft, Heart, Minus, Plus } from 'lucide-react';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -15,6 +15,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState<ShopifyProduct['node'] | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const addItem = useCartStore(state => state.addItem);
   const isCartLoading = useCartStore(state => state.isLoading);
@@ -28,8 +29,17 @@ export default function ProductDetailPage() {
         // Auto-select first available size
         if (data?.options) {
           const sizeOption = data.options.find(opt => opt.name.toLowerCase() === 'size');
-          if (sizeOption?.values?.[0]) {
-            setSelectedSize(sizeOption.values[0]);
+          if (sizeOption?.values) {
+            // Find first available size
+            const firstAvailableSize = sizeOption.values.find(size => {
+              const variant = data.variants.edges.find(v =>
+                v.node.selectedOptions.some(opt => 
+                  opt.name.toLowerCase() === 'size' && opt.value === size
+                )
+              )?.node;
+              return variant?.availableForSale ?? false;
+            });
+            setSelectedSize(firstAvailableSize || sizeOption.values[0]);
           }
         }
       } catch (error) {
@@ -59,13 +69,20 @@ export default function ProductDetailPage() {
       variantId: variant.id,
       variantTitle: variant.title,
       price: variant.price,
-      quantity: 1,
+      quantity: quantity,
       selectedOptions: variant.selectedOptions || [],
     });
     
     toast.success(t.cart.added, {
-      description: `${product.title} - ${selectedSize}`,
+      description: `${product.title} - ${selectedSize} × ${quantity}`,
     });
+    
+    // Reset quantity after adding
+    setQuantity(1);
+  };
+
+  const handleQuantityChange = (delta: number) => {
+    setQuantity(prev => Math.max(1, Math.min(10, prev + delta)));
   };
 
   const selectedVariant = getSelectedVariant();
@@ -223,6 +240,34 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
               )}
+
+              {/* Quantity Selector */}
+              <div className="mb-8">
+                <h3 className="font-semibold text-foreground mb-3">{t.product.quantity}</h3>
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-12 w-12 border-border hover:border-primary"
+                    onClick={() => handleQuantityChange(-1)}
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="w-12 text-center text-lg font-semibold text-foreground">
+                    {quantity}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-12 w-12 border-border hover:border-primary"
+                    onClick={() => handleQuantityChange(1)}
+                    disabled={quantity >= 10}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
 
               {/* Add to Cart & Wishlist */}
               <div className="flex gap-3">
