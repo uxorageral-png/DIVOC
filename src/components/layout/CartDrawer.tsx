@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2 } from 'lucide-react';
+import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2, User } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useEffect } from 'react';
+
+const SHOPIFY_ACCOUNT_URL = 'https://divoc-identity-2ev3w.myshopify.com/account';
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -144,6 +145,37 @@ export function CartDrawer() {
                     </>
                   )}
                 </Button>
+                
+                {/* Shopify Account Links */}
+                <div className="flex items-center justify-center gap-4 pt-2">
+                  <a 
+                    href={`${SHOPIFY_ACCOUNT_URL}/login`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+                  >
+                    <User className="h-3.5 w-3.5" />
+                    {t.nav.login}
+                  </a>
+                  <span className="text-muted-foreground/50">•</span>
+                  <a 
+                    href={`${SHOPIFY_ACCOUNT_URL}/register`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {t.nav.register}
+                  </a>
+                  <span className="text-muted-foreground/50">•</span>
+                  <a 
+                    href={SHOPIFY_ACCOUNT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {t.nav.myAccount}
+                  </a>
+                </div>
               </div>
             </>
           )}
