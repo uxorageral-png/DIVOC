@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useCartSync } from "@/hooks/useCartSync";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 import Index from "./pages/Index";
 import ProductsPage from "./pages/ProductsPage";
 import HoodiesPage from "./pages/HoodiesPage";
@@ -13,20 +14,28 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+function AppRoutes() {
+  useScrollToTop();
+  
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/products/hoodies" element={<HoodiesPage />} />
+      <Route path="/products/tshirts" element={<TShirtsPage />} />
+      <Route path="/product/:handle" element={<ProductDetailPage />} />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
 function AppContent() {
   useCartSync();
   
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/hoodies" element={<HoodiesPage />} />
-        <Route path="/products/tshirts" element={<TShirtsPage />} />
-        <Route path="/product/:handle" element={<ProductDetailPage />} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
