@@ -10,6 +10,9 @@ import ProductsPage from "./pages/ProductsPage";
 import HoodiesPage from "./pages/HoodiesPage";
 import TShirtsPage from "./pages/TShirtsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import FAQPage from "./pages/FAQPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +27,9 @@ function AppRoutes() {
       <Route path="/products/hoodies" element={<HoodiesPage />} />
       <Route path="/products/tshirts" element={<TShirtsPage />} />
       <Route path="/product/:handle" element={<ProductDetailPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/faq" element={<FAQPage />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
