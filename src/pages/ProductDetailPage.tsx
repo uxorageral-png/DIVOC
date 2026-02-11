@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Loader2, ShoppingBag, ChevronLeft, Heart, Minus, Plus } from 'lucide-react';
+import { Loader2, ShoppingBag, ChevronLeft, ChevronRight, Heart, Minus, Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -138,33 +139,65 @@ export default function ProductDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
             {/* Product Images */}
             <div className="space-y-4">
-              {/* Main Image */}
-              <div className="aspect-[3/4] overflow-hidden rounded-lg bg-secondary">
-                {images[selectedImageIndex] ? (
-                  <img
-                    src={images[selectedImageIndex].node.url}
-                    alt={images[selectedImageIndex].node.altText || product.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-secondary/50">
-                    <ShoppingBag className="h-20 w-20 text-muted-foreground" />
-                  </div>
+              {/* Main Image with Navigation Arrows */}
+              <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-secondary group">
+                <AnimatePresence mode="wait">
+                  {images[selectedImageIndex] ? (
+                    <motion.img
+                      key={selectedImageIndex}
+                      src={images[selectedImageIndex].node.url}
+                      alt={images[selectedImageIndex].node.altText || product.title}
+                      className="w-full h-full object-cover"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-secondary/50">
+                      <ShoppingBag className="h-20 w-20 text-muted-foreground" />
+                    </div>
+                  )}
+                </AnimatePresence>
+
+                {/* Navigation Arrows */}
+                {images.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setSelectedImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1)}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/70 backdrop-blur-sm flex items-center justify-center text-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => setSelectedImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/70 backdrop-blur-sm flex items-center justify-center text-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+
+                    {/* Image Counter */}
+                    <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-background/70 backdrop-blur-sm text-xs font-medium text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                      {selectedImageIndex + 1} / {images.length}
+                    </div>
+                  </>
                 )}
               </div>
 
               {/* Thumbnail Gallery */}
               {images.length > 1 && (
-                <div className="flex gap-3 overflow-x-auto pb-2">
+                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
                   {images.map((img, index) => (
-                    <button
+                    <motion.button
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       className={cn(
-                        "flex-shrink-0 w-20 h-24 rounded-md overflow-hidden border-2 transition-colors",
-                        selectedImageIndex === index 
-                          ? "border-primary" 
-                          : "border-transparent hover:border-muted-foreground/50"
+                        "flex-shrink-0 w-20 h-24 rounded-md overflow-hidden border-2 transition-all duration-200",
+                        selectedImageIndex === index
+                          ? "border-primary ring-1 ring-primary/30"
+                          : "border-transparent opacity-60 hover:opacity-100 hover:border-muted-foreground/50"
                       )}
                     >
                       <img
@@ -172,7 +205,7 @@ export default function ProductDetailPage() {
                         alt={img.node.altText || `${product.title} ${index + 1}`}
                         className="w-full h-full object-cover"
                       />
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               )}
