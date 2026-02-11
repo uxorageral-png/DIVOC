@@ -106,7 +106,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Email</p>
-                      <p className="text-foreground">contact@divoc.pt</p>
+                      <p className="text-foreground">Divoc.luxury@gmail.com</p>
                     </div>
                   </div>
 
