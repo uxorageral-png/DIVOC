@@ -77,7 +77,7 @@ export function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger 
                     className={cn(
-                      "bg-transparent text-sm font-medium tracking-wide transition-colors hover:text-primary hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                      "bg-transparent text-sm font-medium tracking-wide transition-colors hover:text-primary hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent data-[active]:bg-transparent",
                       isProductsActive ? 'text-primary' : 'text-muted-foreground'
                     )}
                   >
