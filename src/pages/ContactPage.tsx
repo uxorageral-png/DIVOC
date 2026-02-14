@@ -110,15 +110,15 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
+                  <a href="https://www.instagram.com/divoc.luxury?igsh=Zjl4cmtkeDFocGt1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center">
                       <Instagram className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Instagram</p>
-                      <p className="text-foreground">@divoc.official</p>
+                      <p className="text-foreground">DIVOC</p>
                     </div>
-                  </div>
+                  </a>
 
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center">
