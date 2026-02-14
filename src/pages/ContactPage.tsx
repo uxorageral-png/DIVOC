@@ -14,7 +14,7 @@ export default function ContactPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
@@ -53,8 +53,8 @@ export default function ContactPage() {
                       id="name"
                       name="name"
                       required
-                      className="bg-card border-border focus:border-primary"
-                    />
+                      className="bg-card border-border focus:border-primary" />
+
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
@@ -65,8 +65,8 @@ export default function ContactPage() {
                       name="email"
                       type="email"
                       required
-                      className="bg-card border-border focus:border-primary"
-                    />
+                      className="bg-card border-border focus:border-primary" />
+
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
@@ -77,14 +77,14 @@ export default function ContactPage() {
                       name="message"
                       rows={6}
                       required
-                      className="bg-card border-border focus:border-primary resize-none"
-                    />
+                      className="bg-card border-border focus:border-primary resize-none" />
+
                   </div>
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6"
-                  >
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6">
+
                     {isSubmitting ? '...' : t.contact.send}
                   </Button>
                 </form>
@@ -116,7 +116,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Instagram</p>
-                      <p className="text-foreground">DIVOC</p>
+                      <p className="text-foreground">@DIVOC.LUXURY</p>
                     </div>
                   </a>
 
@@ -135,6 +135,6 @@ export default function ContactPage() {
           </div>
         </section>
       </div>
-    </Layout>
-  );
+    </Layout>);
+
 }
