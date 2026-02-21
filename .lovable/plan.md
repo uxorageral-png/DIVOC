@@ -1,153 +1,61 @@
 
 
-# DIVOC — Premium Streetwear E-Commerce Store
+# Engagement Boost Plan for DIVOC
 
-## 🎯 Vision
-A powerful, minimal streetwear website with African roots — confident enough to stand next to Nike. Black and brown foundations with gold accents, bold typography, and a manifesto-style brand voice.
-
----
-
-## Phase 1: Core Foundation & Visual Identity
-
-### Design System Setup
-- **Color palette**: Black (primary), Brown (secondary), Gold (accents only for CTAs, dividers, icons)
-- **Typography**: Bold sans-serif headings (strong, confident), clean minimal body text
-- **Dark backgrounds with clean, spacious layouts**
-- **Subtle African-inspired abstract patterns** as texture/accents (geometry, rhythm — not literal)
-
-### Global Components
-- **Header/Navigation**: Logo, main nav (Home, All Products, Hoodies, T-Shirts, About Us, Contact Us, FAQ), language switcher (PT/EN/FR), cart icon, user account icon
-- **Footer**: Newsletter signup, social links, legal placeholders
-- **Mobile-first responsive design** throughout
+Here are high-impact features to keep visitors browsing longer and coming back.
 
 ---
 
-## Phase 2: Homepage — The Brand Statement
+## 1. Announcement Banner (Urgency + FOMO)
 
-### 1. Hero Section (Above the Fold)
-- Full-width background image
-- Bold manifesto-style headline
-- Short 1-2 line brand statement
-- Strong CTA: "Shop Collection"
-- Gold accent on CTA button
+A slim, animated banner at the very top of the site with rotating messages like "Free shipping on orders over 50 EUR", "New drops every Friday", or a countdown timer for a limited collection. This creates urgency and gives visitors a reason to act now.
 
-### 2. Brand Story Section
-- Image + text side-by-side
-- Short, powerful paragraph about DIVOC's identity
-- African inspiration expressed abstractly
-- Keywords: Identity, Power, Roots, Movement, Legacy
+## 2. Instagram / Lookbook Gallery Section
 
-### 3. Featured Categories
-- Two large cards: **Hoodies** & **T-Shirts**
-- Clean design with generous spacing
-- Subtle hover effects
+A new homepage section showing lifestyle imagery in a masonry or carousel layout, titled something like "DIVOC IN THE WILD" or "#DIVOCLEGACY". This keeps people scrolling, builds brand identity, and connects to social proof. Clicking an image can link to the product or Instagram.
 
-### 4. Featured Products
-- Focus on hoodies primarily
-- Large product imagery
-- Minimal, elegant hover effects
-- Quick add to cart functionality
+## 3. "New Arrivals" Badge + Countdown Timer
 
-### 5. Brand Values (Minimal)
-- Four pillars displayed simply: Quality, Identity, Culture, Street
-- Icons or subtle geometric shapes with gold accents
+Add a "NEW" badge on recently added products and optionally a "Drop ends in..." countdown on featured items. This creates urgency and highlights fresh content, giving returning visitors something new to see.
 
-### 6. Footer
-- Newsletter signup with gold accent button
-- Social media links
-- Legal placeholder links
+## 4. Smooth Page Transitions
+
+Add animated route transitions (fade/slide) between pages using framer-motion's `AnimatePresence`. This makes navigation feel premium and app-like, reducing the perception of page loads and keeping people immersed.
+
+## 5. "You May Also Like" on Product Pages
+
+Add a related products section at the bottom of each product detail page, showing 4 products from the same category. This keeps visitors browsing instead of leaving after viewing one product.
+
+## 6. Back to Top Button
+
+A floating button that appears after scrolling down, allowing quick return to the top. Small UX detail that reduces friction on long pages.
 
 ---
 
-## Phase 3: Collections & Product Pages
+## Technical Details
 
-### Collection Pages
-- **All Products**, **Hoodies**, **T-Shirts**
-- Grid layout with large product imagery
-- Filter/sort options
-- Clean, spacious design
+### Files to create:
+- `src/components/layout/AnnouncementBar.tsx` -- rotating top banner
+- `src/components/home/InstagramSection.tsx` -- lifestyle gallery section
+- `src/components/products/RelatedProducts.tsx` -- "You may also like" grid
+- `src/components/layout/BackToTopButton.tsx` -- floating scroll button
+- `src/components/layout/PageTransition.tsx` -- route transition wrapper
 
-### Product Detail Page (Nike-inspired)
-- Large product images with gallery
-- Size selector
-- Color selector (if applicable)
-- Short, powerful product description
-- "Add to Cart" button with gold accent
-- Wishlist button (heart icon)
+### Files to modify:
+- `src/components/layout/Layout.tsx` -- add AnnouncementBar + BackToTopButton
+- `src/pages/Index.tsx` -- add InstagramSection
+- `src/pages/ProductDetailPage.tsx` -- add RelatedProducts section
+- `src/lib/i18n.ts` -- add translation keys for new sections (all 3 languages)
+- `src/components/home/index.ts` -- export new component
+- `src/components/home/FeaturedProducts.tsx` -- add "NEW" badge logic
+- `src/App.tsx` -- wrap routes with PageTransition for animated transitions
 
----
-
-## Phase 4: User Features & Cart
-
-### Shopping Cart
-- Slide-out cart drawer
-- Product thumbnails, quantity controls
-- Subtotal and checkout button
-- Real Shopify checkout integration
-
-### Customer Account
-- Login/Register pages
-- Order history
-- Saved wishlist (accessible when logged in)
-
-### Wishlist
-- Add/remove products from wishlist
-- Persists to user account
-- Accessible from account page
-
----
-
-## Phase 5: Information Pages
-
-### About Us
-- Brand story with manifesto-style writing
-- African roots expressed through modern, abstract lens
-- Imagery reflecting the brand identity
-
-### Contact Us
-- Simple contact form
-- Social links
-- Brand email placeholder
-
-### FAQ
-- Accordion-style expandable questions
-- Common questions about shipping, returns, sizing
-
----
-
-## Phase 6: Multi-Language Support
-
-### Three Languages
-- **Portuguese** (default)
-- **English**
-- **French**
-
-### Implementation
-- Manual language switcher in header
-- All content translated across pages
-- Premium placeholder copy in manifesto style
-
----
-
-## ✨ User Experience Details
-
-- **Smooth, subtle animations** (Nike-inspired confidence)
-- **Large typography** with strong spacing
-- **Fast loading** with optimized images
-- **No visual clutter** — minimal information presentation
-- **Mobile-first** responsive design
-
----
-
-## 🚫 Explicitly Excluded
-- Excess colors beyond black, brown, gold
-- Long paragraphs or information overload
-- Heavy or literal African patterns
-- Complex custom features or heavy apps
-- Videos (images only)
-
----
-
-## 💫 The Final Feeling
-> "DIVOC feels like a global streetwear brand with African roots — confident, minimal, and powerful — ready to stand next to Nike."
+### Implementation sequence:
+1. Add i18n keys for all new sections
+2. Build AnnouncementBar and add to Layout
+3. Build InstagramSection and add to homepage
+4. Add "NEW" badge to product cards in FeaturedProducts
+5. Build RelatedProducts and add to ProductDetailPage
+6. Build BackToTopButton and add to Layout
+7. Add PageTransition wrapper for route animations
 
