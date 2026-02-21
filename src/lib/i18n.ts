@@ -131,6 +131,20 @@ export const translations = {
         a: 'Aceitamos cartões de crédito/débito, PayPal e MB Way.',
       },
     },
+    // Engagement features
+    announcement: {
+      freeShipping: 'Envio grátis em encomendas acima de 50€',
+      newDrops: 'Novos lançamentos todas as sextas',
+      limitedEdition: 'Edição limitada — Stock reduzido',
+    },
+    instagram: {
+      title: 'DIVOC NO MUNDO',
+      subtitle: 'Streetwear com alma. Partilha o teu estilo #DIVOCLEGACY',
+    },
+    relatedProducts: {
+      title: 'TAMBÉM PODES GOSTAR',
+    },
+    newBadge: 'NOVO',
   },
   en: {
     nav: {
@@ -242,6 +256,19 @@ export const translations = {
         a: 'We accept credit/debit cards, PayPal, and MB Way.',
       },
     },
+    announcement: {
+      freeShipping: 'Free shipping on orders over 50€',
+      newDrops: 'New drops every Friday',
+      limitedEdition: 'Limited edition — Low stock',
+    },
+    instagram: {
+      title: 'DIVOC IN THE WILD',
+      subtitle: 'Streetwear with soul. Share your style #DIVOCLEGACY',
+    },
+    relatedProducts: {
+      title: 'YOU MAY ALSO LIKE',
+    },
+    newBadge: 'NEW',
   },
   fr: {
     nav: {
@@ -353,6 +380,19 @@ export const translations = {
         a: 'Nous acceptons les cartes de crédit/débit, PayPal et MB Way.',
       },
     },
+    announcement: {
+      freeShipping: 'Livraison gratuite dès 50€',
+      newDrops: 'Nouveautés chaque vendredi',
+      limitedEdition: 'Édition limitée — Stock réduit',
+    },
+    instagram: {
+      title: 'DIVOC DANS LE MONDE',
+      subtitle: 'Streetwear avec âme. Partage ton style #DIVOCLEGACY',
+    },
+    relatedProducts: {
+      title: 'VOUS AIMEREZ AUSSI',
+    },
+    newBadge: 'NOUVEAU',
   },
 } as const;
 

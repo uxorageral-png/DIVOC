@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Loader2 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
@@ -117,6 +118,13 @@ export function FeaturedProducts() {
                       <div className="w-full h-full flex items-center justify-center">
                         <ShoppingBag className="h-12 w-12 text-muted-foreground" />
                       </div>
+                    )}
+
+                    {/* NEW Badge - show on first 2 products */}
+                    {products.indexOf(product) < 2 && (
+                      <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold tracking-wider">
+                        {t.newBadge}
+                      </Badge>
                     )}
                     
                     {/* Quick Add Button */}
