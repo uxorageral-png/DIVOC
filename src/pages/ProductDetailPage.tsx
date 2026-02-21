@@ -9,6 +9,7 @@ import { fetchProductByHandle, ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { RelatedProducts } from '@/components/products/RelatedProducts';
 
 export default function ProductDetailPage() {
   const { handle } = useParams<{ handle: string }>();
@@ -339,6 +340,12 @@ export default function ProductDetailPage() {
               </div>
             </div>
           </div>
+
+          {/* Related Products */}
+          <RelatedProducts 
+            currentHandle={handle || ''} 
+            productType={product.productType} 
+          />
         </div>
       </section>
     </Layout>
