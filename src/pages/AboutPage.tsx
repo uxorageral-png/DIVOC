@@ -73,31 +73,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Values Section */}
-        <section className="py-24 lg:py-36 bg-card border-t border-b border-border">
-          <div className="container mx-auto px-4 lg:px-8">
-            <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-              {[
-                { key: 'identity', label: t.brand.values.identity },
-                { key: 'culture', label: t.brand.values.culture },
-                { key: 'quality', label: t.brand.values.quality },
-                { key: 'street', label: t.brand.values.street },
-              ].map(({ key, label }) => (
-                <StaggerItem key={key}>
-                  <div className="text-center group">
-                    <div className="w-20 h-20 mx-auto mb-6 border border-primary/30 rounded-full flex items-center justify-center transition-all duration-500 group-hover:border-primary group-hover:scale-110">
-                      <div className="w-3 h-3 bg-primary rounded-full transition-transform duration-500 group-hover:scale-150" />
-                    </div>
-                    <h3 className="font-bebas text-2xl md:text-3xl tracking-wider text-foreground uppercase">
-                      {label}
-                    </h3>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
         {/* Manifesto Quote */}
         <section className="py-28 lg:py-40 border-b border-border relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
