@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { Language, translations } from '@/lib/i18n';
 
-type TranslationType = typeof translations[Language];
+type TranslationType = (typeof translations)[Language];
 
 interface LanguageContextType {
   language: Language;
@@ -9,7 +9,17 @@ interface LanguageContextType {
   t: TranslationType;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LANGUAGE_CONTEXT_KEY = '__divoc_language_context__';
+
+type GlobalWithLanguageContext = typeof globalThis & {
+  [LANGUAGE_CONTEXT_KEY]?: React.Context<LanguageContextType | undefined>;
+};
+
+const globalWithLanguageContext = globalThis as GlobalWithLanguageContext;
+
+const LanguageContext =
+  globalWithLanguageContext[LANGUAGE_CONTEXT_KEY] ??
+  (globalWithLanguageContext[LANGUAGE_CONTEXT_KEY] = createContext<LanguageContextType | undefined>(undefined));
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
@@ -24,7 +34,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('divoc-language', lang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('divoc-language', lang);
+    }
   };
 
   useEffect(() => {
@@ -33,17 +45,24 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const t = translations[language];
 
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>;
 }
 
 export function useLanguage() {
   const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+
+  if (context) {
+    return context;
   }
-  return context;
+
+  if (import.meta.env.DEV) {
+    console.warn('useLanguage called without LanguageProvider. Falling back to Portuguese translations.');
+  }
+
+  return {
+    language: 'pt' as Language,
+    setLanguage: () => undefined,
+    t: translations.pt,
+  };
 }
+
