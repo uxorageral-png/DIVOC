@@ -39,6 +39,9 @@ function AppRoutes() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FAQPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/shipping" element={<ShippingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </PageTransition>
