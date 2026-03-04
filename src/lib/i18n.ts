@@ -36,8 +36,8 @@ export const translations = {
     },
     // Brand Story
     brand: {
-      title: 'A NOSSA HISTÓRIA',
-      text: 'DIVOC nasce da fusão entre o streetwear contemporâneo e a força ancestral africana. Cada peça carrega o peso da identidade, o poder das raízes e o movimento de quem não para.',
+      title: 'A VOZ DA UNIÃO AFRICANA',
+      text: 'DIVOC representa a inversão. A desconstrução do colonialismo. Resistência, reconquista e renascimento. Existimos para promover a união de África e da sua diáspora através da moda, arte e cultura. O nosso luxo não é cópia. É memória.',
       values: {
         quality: 'Qualidade',
         identity: 'Identidade',
@@ -172,8 +172,8 @@ export const translations = {
       cta: 'Shop Collection',
     },
     brand: {
-      title: 'OUR STORY',
-      text: 'DIVOC is born from the fusion of contemporary streetwear and ancestral African strength. Each piece carries the weight of identity, the power of roots, and the movement of those who never stop.',
+      title: 'THE VOICE OF AFRICAN UNION',
+      text: 'DIVOC represents inversion. The deconstruction of colonialism. Resistance, reconquest, and rebirth. We exist to promote the union of Africa and its diaspora through fashion, art, and culture. Our luxury is not a copy. It is memory.',
       values: {
         quality: 'Quality',
         identity: 'Identity',
@@ -299,8 +299,8 @@ export const translations = {
       cta: 'Voir la Collection',
     },
     brand: {
-      title: 'NOTRE HISTOIRE',
-      text: 'DIVOC naît de la fusion entre le streetwear contemporain et la force ancestrale africaine. Chaque pièce porte le poids de l\'identité, le pouvoir des racines et le mouvement de ceux qui n\'arrêtent jamais.',
+      title: 'LA VOIX DE L\'UNION AFRICAINE',
+      text: 'DIVOC représente l\'inversion. La déconstruction du colonialisme. Résistance, reconquête et renaissance. Nous existons pour promouvoir l\'union de l\'Afrique et de sa diaspora à travers la mode, l\'art et la culture. Notre luxe n\'est pas une copie. C\'est une mémoire.',
       values: {
         quality: 'Qualité',
         identity: 'Identité',
