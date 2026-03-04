@@ -172,8 +172,8 @@ export const translations = {
       cta: 'Shop Collection',
     },
     brand: {
-      title: 'OUR STORY',
-      text: 'DIVOC is born from the fusion of contemporary streetwear and ancestral African strength. Each piece carries the weight of identity, the power of roots, and the movement of those who never stop.',
+      title: 'THE VOICE OF AFRICAN UNION',
+      text: 'DIVOC represents inversion. The deconstruction of colonialism. Resistance, reconquest, and rebirth. We exist to promote the union of Africa and its diaspora through fashion, art, and culture. Our luxury is not a copy. It is memory.',
       values: {
         quality: 'Quality',
         identity: 'Identity',
