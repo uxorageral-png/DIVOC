@@ -36,8 +36,8 @@ export const translations = {
     },
     // Brand Story
     brand: {
-      title: 'A NOSSA HISTÓRIA',
-      text: 'DIVOC nasce da fusão entre o streetwear contemporâneo e a força ancestral africana. Cada peça carrega o peso da identidade, o poder das raízes e o movimento de quem não para.',
+      title: 'A VOZ DA UNIÃO AFRICANA',
+      text: 'DIVOC representa a inversão. A desconstrução do colonialismo. Resistência, reconquista e renascimento. Existimos para promover a união de África e da sua diáspora através da moda, arte e cultura. O nosso luxo não é cópia. É memória.',
       values: {
         quality: 'Qualidade',
         identity: 'Identidade',
