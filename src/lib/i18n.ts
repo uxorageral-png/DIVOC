@@ -98,9 +98,12 @@ export const translations = {
     // About Page
     about: {
       title: 'SOBRE DIVOC',
-      intro: 'Somos mais do que uma marca. Somos um movimento.',
-      story: 'DIVOC nasceu nas ruas, alimentada por ritmos ancestrais e visões de futuro. Cada peça que criamos é uma declaração de identidade, um símbolo de poder, uma ponte entre raízes e aspirações.',
-      mission: 'A nossa missão é vestir aqueles que não se conformam, que carregam a sua história com orgulho e que caminham com propósito.',
+      intro: 'DIVOC não é só moda. É um movimento.',
+      subtitle: 'A Voz da União Africana',
+      story: 'DIVOC representa a inversão. A desconstrução do colonialismo. Representa resistência, reconquista e renascimento. Nascemos para promover a união de África e da sua diáspora através da moda, arte, cultura e mensagens de impacto.',
+      mission: 'Inspirar orgulho, despertar consciências e romper silêncios. O nosso luxo não é cópia. É memória. Unimos África pela arte. Vestimos herança.',
+      logo: 'O logotipo é ouro sobre estrutura tribal: símbolo de poder ancestral e renascimento africano.',
+      manifesto: '"PODER EM CADA PEÇA. RAÍZES EM CADA FIO."',
     },
     // Contact Page
     contact: {
@@ -225,9 +228,12 @@ export const translations = {
     },
     about: {
       title: 'ABOUT DIVOC',
-      intro: 'We are more than a brand. We are a movement.',
-      story: 'DIVOC was born in the streets, fueled by ancestral rhythms and visions of the future. Every piece we create is a statement of identity, a symbol of power, a bridge between roots and aspirations.',
-      mission: 'Our mission is to dress those who do not conform, who carry their history with pride and walk with purpose.',
+      intro: 'DIVOC is not just fashion. It is a movement.',
+      subtitle: 'The Voice of African Union',
+      story: 'DIVOC represents inversion. The deconstruction of colonialism. It stands for resistance, reconquest, and rebirth. We exist to promote the union of Africa and its diaspora through fashion, art, culture, and impactful messages.',
+      mission: 'To inspire pride, awaken consciousness, and break silences. Our luxury is not a copy. It is memory. We unite Africa through art. We wear heritage.',
+      logo: 'The logo is gold over tribal structure: a symbol of ancestral power and African rebirth.',
+      manifesto: '"POWER IN EVERY PIECE. ROOTS IN EVERY THREAD."',
     },
     contact: {
       title: 'CONTACT',
@@ -349,9 +355,12 @@ export const translations = {
     },
     about: {
       title: 'À PROPOS DE DIVOC',
-      intro: 'Nous sommes plus qu\'une marque. Nous sommes un mouvement.',
-      story: 'DIVOC est née dans les rues, alimentée par des rythmes ancestraux et des visions du futur. Chaque pièce que nous créons est une déclaration d\'identité, un symbole de pouvoir, un pont entre les racines et les aspirations.',
-      mission: 'Notre mission est d\'habiller ceux qui ne se conforment pas, qui portent leur histoire avec fierté et qui marchent avec un but.',
+      intro: 'DIVOC n\'est pas que de la mode. C\'est un mouvement.',
+      subtitle: 'La Voix de l\'Union Africaine',
+      story: 'DIVOC représente l\'inversion. La déconstruction du colonialisme. Elle incarne la résistance, la reconquête et la renaissance. Nous existons pour promouvoir l\'union de l\'Afrique et de sa diaspora à travers la mode, l\'art, la culture et des messages d\'impact.',
+      mission: 'Inspirer la fierté, éveiller les consciences et briser les silences. Notre luxe n\'est pas une copie. C\'est une mémoire. Nous unissons l\'Afrique par l\'art. Nous portons l\'héritage.',
+      logo: 'Le logo est de l\'or sur une structure tribale : symbole de pouvoir ancestral et de renaissance africaine.',
+      manifesto: '"DU POUVOIR DANS CHAQUE PIÈCE. DES RACINES DANS CHAQUE FIL."',
     },
     contact: {
       title: 'CONTACT',
