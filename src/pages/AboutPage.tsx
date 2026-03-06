@@ -1,6 +1,7 @@
 import { Layout } from '@/components/layout';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeIn } from '@/components/animations/FadeIn';
+import africaLegacy from '@/assets/africa-legacy.jpg';
 import { StaggerContainer, StaggerItem } from '@/components/animations/StaggerContainer';
 
 export default function AboutPage() {
@@ -56,17 +57,13 @@ export default function AboutPage() {
                 </div>
               </FadeIn>
               <FadeIn direction="right" delay={0.2}>
-                <div className="relative aspect-[4/5] bg-card rounded-lg overflow-hidden border border-border">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                    <span className="font-bebas text-7xl md:text-8xl text-primary/20 tracking-[0.2em] mb-4">
-                      DIVOC
-                    </span>
-                    <div className="w-16 h-[2px] bg-primary/30 mb-4" />
-                    <span className="text-primary/40 text-sm tracking-[0.4em] uppercase">
-                      Legacy
-                    </span>
-                  </div>
+                <div className="relative aspect-[4/5] rounded-lg overflow-hidden border border-border">
+                  <img 
+                    src={africaLegacy} 
+                    alt="Africa Legacy - DIVOC" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
                 </div>
               </FadeIn>
             </div>
