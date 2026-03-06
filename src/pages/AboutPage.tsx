@@ -1,6 +1,7 @@
 import { Layout } from '@/components/layout';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeIn } from '@/components/animations/FadeIn';
+import africaLegacy from '@/assets/africa-legacy.jpg';
 import { StaggerContainer, StaggerItem } from '@/components/animations/StaggerContainer';
 
 export default function AboutPage() {
