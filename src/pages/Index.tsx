@@ -20,7 +20,7 @@ const jsonLd = {
 const Index = () => {
   return (
     <Layout>
-      <HeroSection />
+      <SEO canonical="/" jsonLd={jsonLd} />
       <BrandStorySection />
       <FeaturedCategories />
       <FeaturedProducts />
