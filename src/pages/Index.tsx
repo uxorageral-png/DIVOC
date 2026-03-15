@@ -21,6 +21,7 @@ const Index = () => {
   return (
     <Layout>
       <SEO canonical="/" jsonLd={jsonLd} />
+      <HeroSection />
       <BrandStorySection />
       <FeaturedCategories />
       <FeaturedProducts />
