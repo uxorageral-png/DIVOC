@@ -147,6 +147,7 @@ export default function ShippingPage() {
 
   return (
     <Layout>
+      <SEO title="Envios e Devoluções" description="Informação sobre envios, prazos de entrega e política de devoluções DIVOC." canonical="/shipping" />
       <div className="min-h-screen bg-background">
         <section className="py-20 lg:py-28">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
