@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeIn } from '@/components/animations/FadeIn';
 
