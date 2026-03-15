@@ -26,6 +26,7 @@ export default function ContactPage() {
 
   return (
     <Layout>
+      <SEO title="Contacto" description="Entra em contacto com a DIVOC. Estamos aqui para ajudar." canonical="/contact" />
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative py-24 lg:py-32 bg-card border-b border-border">
