@@ -12,7 +12,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'DIVOC',
-  url: 'https://divoc.lovable.app',
+  url: 'https://www.divocluxury.com',
   description: 'Streetwear premium com raízes africanas.',
   sameAs: ['https://www.instagram.com/divoc.luxury'],
 };
