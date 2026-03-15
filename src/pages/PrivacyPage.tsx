@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeIn } from '@/components/animations/FadeIn';
 
@@ -101,6 +102,7 @@ export default function PrivacyPage() {
 
   return (
     <Layout>
+      <SEO title="Política de Privacidade" description="Política de privacidade da DIVOC. Como recolhemos e protegemos os teus dados." canonical="/privacy" noindex />
       <div className="min-h-screen bg-background">
         <section className="py-20 lg:py-28">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">

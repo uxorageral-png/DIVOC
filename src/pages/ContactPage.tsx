@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,6 +26,7 @@ export default function ContactPage() {
 
   return (
     <Layout>
+      <SEO title="Contacto" description="Entra em contacto com a DIVOC. Estamos aqui para ajudar." canonical="/contact" />
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative py-24 lg:py-32 bg-card border-b border-border">

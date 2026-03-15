@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeIn } from '@/components/animations/FadeIn';
 
@@ -113,6 +114,7 @@ export default function TermsPage() {
 
   return (
     <Layout>
+      <SEO title="Termos e Condições" description="Termos e condições de utilização do site DIVOC." canonical="/terms" noindex />
       <div className="min-h-screen bg-background">
         <section className="py-20 lg:py-28">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">

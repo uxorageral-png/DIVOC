@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeIn } from '@/components/animations/FadeIn';
 import africaLegacy from '@/assets/africa-legacy.jpg';
@@ -9,6 +10,7 @@ export default function AboutPage() {
 
   return (
     <Layout>
+      <SEO title="Sobre Nós" description="Conhece a DIVOC — streetwear premium com raízes africanas. A nossa história, missão e valores." canonical="/about" />
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative py-28 lg:py-40 bg-card border-b border-border overflow-hidden">

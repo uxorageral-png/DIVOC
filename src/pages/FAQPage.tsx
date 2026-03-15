@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import {
   Accordion,
@@ -19,6 +20,7 @@ export default function FAQPage() {
 
   return (
     <Layout>
+      <SEO title="FAQ" description="Perguntas frequentes sobre envios, devoluções, tamanhos e pagamentos na DIVOC." canonical="/faq" />
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative py-24 lg:py-32 bg-card border-b border-border">
