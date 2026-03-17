@@ -12,8 +12,8 @@ interface SEOProps {
 
 const SITE_NAME = 'DIVOC';
 const DEFAULT_DESCRIPTION = 'DIVOC - Streetwear premium com raízes africanas. Veste a tua identidade. Hoodies, T-Shirts e mais.';
-const DEFAULT_IMAGE = 'https://www.divocluxury.com/og-image.png';
-const BASE_URL = 'https://www.divocluxury.com';
+const DEFAULT_IMAGE = 'https://divoc.lovable.app/og-image.png';
+const BASE_URL = 'https://divoc.lovable.app';
 
 export function SEO({
   title,
