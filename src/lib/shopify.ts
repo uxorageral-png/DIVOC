@@ -265,6 +265,8 @@ function formatCheckoutUrl(checkoutUrl: string): string {
   try {
     const url = new URL(checkoutUrl);
     url.searchParams.set('channel', 'online_store');
+    // Force the checkout to use the myshopify domain to avoid Vercel 404s
+    url.hostname = 'divocstore.myshopify.com';
     return url.toString();
   } catch {
     return checkoutUrl;
@@ -272,8 +274,8 @@ function formatCheckoutUrl(checkoutUrl: string): string {
 }
 
 function isCartNotFoundError(userErrors: Array<{ field: string[] | null; message: string }>): boolean {
-  return userErrors.some(e => 
-    e.message.toLowerCase().includes('cart not found') || 
+  return userErrors.some(e =>
+    e.message.toLowerCase().includes('cart not found') ||
     e.message.toLowerCase().includes('does not exist')
   );
 }
@@ -308,7 +310,7 @@ export async function createShopifyCart(item: CartItem): Promise<{ cartId: strin
 }
 
 export async function addLineToShopifyCart(
-  cartId: string, 
+  cartId: string,
   item: CartItem
 ): Promise<{ success: boolean; lineId?: string; cartNotFound?: boolean }> {
   const data = await storefrontApiRequest(CART_LINES_ADD_MUTATION, {
@@ -324,15 +326,15 @@ export async function addLineToShopifyCart(
   }
 
   const lines = data?.data?.cartLinesAdd?.cart?.lines?.edges || [];
-  const newLine = lines.find((l: { node: { id: string; merchandise: { id: string } } }) => 
+  const newLine = lines.find((l: { node: { id: string; merchandise: { id: string } } }) =>
     l.node.merchandise.id === item.variantId
   );
   return { success: true, lineId: newLine?.node?.id };
 }
 
 export async function updateShopifyCartLine(
-  cartId: string, 
-  lineId: string, 
+  cartId: string,
+  lineId: string,
   quantity: number
 ): Promise<{ success: boolean; cartNotFound?: boolean }> {
   const data = await storefrontApiRequest(CART_LINES_UPDATE_MUTATION, {
@@ -350,7 +352,7 @@ export async function updateShopifyCartLine(
 }
 
 export async function removeLineFromShopifyCart(
-  cartId: string, 
+  cartId: string,
   lineId: string
 ): Promise<{ success: boolean; cartNotFound?: boolean }> {
   const data = await storefrontApiRequest(CART_LINES_REMOVE_MUTATION, {
