@@ -8,14 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { languages } from '@/lib/i18n';
@@ -72,39 +64,34 @@ export function Header() {
             </Link>
 
             {/* Products Dropdown */}
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger 
-                    className={cn(
-                      "bg-transparent text-sm font-medium tracking-wide transition-colors hover:text-primary hover:bg-transparent focus:bg-transparent focus:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary data-[active]:bg-transparent data-[active]:text-primary",
-                      isProductsActive ? 'text-primary' : 'text-muted-foreground'
-                    )}
-                  >
-                    {t.nav.products}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-48 gap-1 p-2 bg-card border border-border">
-                      {productSubLinks.map((link) => (
-                        <li key={link.href}>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              to={link.href}
-                              className={cn(
-                                "block select-none rounded-sm px-3 py-2 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                location.pathname === link.href ? 'text-primary bg-accent/50' : 'text-foreground'
-                              )}
-                            >
-                              {link.label}
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className={cn(
+                    "inline-flex items-center gap-1 bg-transparent text-sm font-medium tracking-wide transition-colors hover:text-primary focus:outline-none",
+                    isProductsActive ? 'text-primary' : 'text-muted-foreground'
+                  )}
+                >
+                  {t.nav.products}
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="bg-card border-border w-48">
+                {productSubLinks.map((link) => (
+                  <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
+                    <Link
+                      to={link.href}
+                      className={cn(
+                        "w-full",
+                        location.pathname === link.href ? 'text-primary bg-accent/50' : ''
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Other Links */}
             <Link
