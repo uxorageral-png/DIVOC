@@ -27,6 +27,8 @@ export const translations = {
       register: 'Registar',
       myAccount: 'Minha Conta',
       wishlist: 'Lista de Desejos',
+      lookbook: 'Lookbook',
+      sizeGuide: 'Guia de Tamanhos',
     },
     // Hero Section
     hero: {
