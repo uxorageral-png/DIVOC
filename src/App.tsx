@@ -19,6 +19,8 @@ import FAQPage from "./pages/FAQPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import ShippingPage from "./pages/ShippingPage";
+import SizeGuidePage from "./pages/SizeGuidePage";
+import LookbookPage from "./pages/LookbookPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
