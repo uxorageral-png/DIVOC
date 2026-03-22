@@ -27,6 +27,8 @@ export const translations = {
       register: 'Registar',
       myAccount: 'Minha Conta',
       wishlist: 'Lista de Desejos',
+      lookbook: 'Lookbook',
+      sizeGuide: 'Guia de Tamanhos',
     },
     // Hero Section
     hero: {
@@ -165,6 +167,8 @@ export const translations = {
       register: 'Register',
       myAccount: 'My Account',
       wishlist: 'Wishlist',
+      lookbook: 'Lookbook',
+      sizeGuide: 'Size Guide',
     },
     hero: {
       headline: 'WEAR YOUR IDENTITY',
@@ -292,6 +296,8 @@ export const translations = {
       register: 'S\'inscrire',
       myAccount: 'Mon Compte',
       wishlist: 'Liste de Souhaits',
+      lookbook: 'Lookbook',
+      sizeGuide: 'Guide des Tailles',
     },
     hero: {
       headline: 'PORTE TON IDENTITÉ',

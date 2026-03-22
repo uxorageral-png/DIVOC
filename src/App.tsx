@@ -19,6 +19,8 @@ import FAQPage from "./pages/FAQPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import ShippingPage from "./pages/ShippingPage";
+import SizeGuidePage from "./pages/SizeGuidePage";
+import LookbookPage from "./pages/LookbookPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +44,8 @@ function AppRoutes() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/shipping" element={<ShippingPage />} />
+          <Route path="/size-guide" element={<SizeGuidePage />} />
+          <Route path="/lookbook" element={<LookbookPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </PageTransition>
