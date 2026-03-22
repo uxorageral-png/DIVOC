@@ -167,6 +167,8 @@ export const translations = {
       register: 'Register',
       myAccount: 'My Account',
       wishlist: 'Wishlist',
+      lookbook: 'Lookbook',
+      sizeGuide: 'Size Guide',
     },
     hero: {
       headline: 'WEAR YOUR IDENTITY',
