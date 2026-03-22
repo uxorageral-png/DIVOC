@@ -59,10 +59,25 @@ export function Footer() {
               </p>
             </div>
 
-            {/* Legal Links */}
+            {/* Quick Links */}
             <div>
-              <h4 className="font-semibold text-foreground mb-4">Legal</h4>
+              <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
               <ul className="space-y-2">
+                <li>
+                  <Link to="/size-guide" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {t.nav.sizeGuide || 'Size Guide'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/lookbook" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {t.nav.lookbook || 'Lookbook'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/shipping" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {t.footer.legal.shipping}
+                  </Link>
+                </li>
                 <li>
                   <Link to="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                     {t.footer.legal.privacy}
@@ -71,11 +86,6 @@ export function Footer() {
                 <li>
                   <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                     {t.footer.legal.terms}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/shipping" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {t.footer.legal.shipping}
                   </Link>
                 </li>
               </ul>

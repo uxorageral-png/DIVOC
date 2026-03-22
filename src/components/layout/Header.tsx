@@ -24,9 +24,10 @@ export function Header() {
 
   const mainNavLinks = [
     { href: '/', label: t.nav.home },
+    { href: '/lookbook', label: t.nav.lookbook || 'Lookbook' },
+    { href: '/size-guide', label: t.nav.sizeGuide || 'Size Guide' },
     { href: '/about', label: t.nav.about },
     { href: '/contact', label: t.nav.contact },
-    { href: '/faq', label: t.nav.faq },
   ];
 
   const productSubLinks = [

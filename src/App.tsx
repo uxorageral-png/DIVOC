@@ -44,6 +44,8 @@ function AppRoutes() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/shipping" element={<ShippingPage />} />
+          <Route path="/size-guide" element={<SizeGuidePage />} />
+          <Route path="/lookbook" element={<LookbookPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </PageTransition>
