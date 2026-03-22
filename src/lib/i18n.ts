@@ -296,6 +296,8 @@ export const translations = {
       register: 'S\'inscrire',
       myAccount: 'Mon Compte',
       wishlist: 'Liste de Souhaits',
+      lookbook: 'Lookbook',
+      sizeGuide: 'Guide des Tailles',
     },
     hero: {
       headline: 'PORTE TON IDENTITÉ',
