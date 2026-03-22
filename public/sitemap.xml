@@ -8,6 +8,8 @@
   <url><loc>https://www.divocluxury.com/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://www.divocluxury.com/faq</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://www.divocluxury.com/shipping</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.divocluxury.com/size-guide</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.divocluxury.com/lookbook</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://www.divocluxury.com/privacy</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://www.divocluxury.com/terms</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
 </urlset>
