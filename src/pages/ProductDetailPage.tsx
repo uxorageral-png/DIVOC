@@ -98,6 +98,23 @@ export default function ProductDetailPage() {
   const images = product?.images.edges || [];
   const sizeOption = product?.options.find(opt => opt.name.toLowerCase() === 'size');
 
+  const currentAmount = parseFloat(
+    selectedVariant?.price.amount || product?.priceRange.minVariantPrice.amount || '0'
+  );
+  const compareAmount = selectedVariant?.compareAtPrice?.amount
+    ? parseFloat(selectedVariant.compareAtPrice.amount)
+    : product?.compareAtPriceRange?.minVariantPrice.amount
+      ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount)
+      : 0;
+  const hasDiscount = compareAmount > currentAmount;
+  const discountPercent = hasDiscount
+    ? Math.round(((compareAmount - currentAmount) / compareAmount) * 100)
+    : 0;
+  const currencyCode =
+    selectedVariant?.price.currencyCode ||
+    product?.priceRange.minVariantPrice.currencyCode ||
+    '';
+
   if (loading) {
     return (
       <Layout>
@@ -233,10 +250,21 @@ export default function ProductDetailPage() {
               </h1>
 
               {/* Price */}
-              <p className="text-2xl font-bold text-primary mb-6">
-                {selectedVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode}{' '}
-                {parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
-              </p>
+              <div className="flex items-baseline gap-3 mb-6 flex-wrap">
+                <p className="text-2xl font-bold text-primary">
+                  {currencyCode} {currentAmount.toFixed(2)}
+                </p>
+                {hasDiscount && (
+                  <>
+                    <p className="text-lg text-muted-foreground line-through">
+                      {currencyCode} {compareAmount.toFixed(2)}
+                    </p>
+                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-destructive text-destructive-foreground text-xs font-bold tracking-wider">
+                      -{discountPercent}%
+                    </span>
+                  </>
+                )}
+              </div>
 
               {/* Description */}
               <div className="mb-8">

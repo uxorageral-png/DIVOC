@@ -94,6 +94,13 @@ export function FeaturedProducts() {
             const variant = product.node.variants.edges[0]?.node;
             const image = product.node.images.edges[0]?.node;
             const isAvailable = variant?.availableForSale;
+            const currentPrice = parseFloat(product.node.priceRange.minVariantPrice.amount);
+            const compareAmount = product.node.compareAtPriceRange?.minVariantPrice.amount;
+            const comparePrice = compareAmount ? parseFloat(compareAmount) : 0;
+            const hasDiscount = comparePrice > currentPrice;
+            const discountPercent = hasDiscount
+              ? Math.round(((comparePrice - currentPrice) / comparePrice) * 100)
+              : 0;
 
             return (
               <StaggerItem key={product.node.id}>
@@ -126,6 +133,13 @@ export function FeaturedProducts() {
                         {t.newBadge}
                       </Badge>
                     )}
+
+                    {/* Discount Badge */}
+                    {hasDiscount && (
+                      <Badge className="absolute top-3 right-3 bg-destructive text-destructive-foreground text-xs font-bold tracking-wider">
+                        -{discountPercent}%
+                      </Badge>
+                    )}
                     
                     {/* Quick Add Button */}
                     <motion.div 
@@ -147,10 +161,18 @@ export function FeaturedProducts() {
                   <h3 className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
                     {product.node.title}
                   </h3>
-                  <p className="text-primary font-semibold">
-                    {product.node.priceRange.minVariantPrice.currencyCode}{' '}
-                    {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}
-                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-primary font-semibold">
+                      {product.node.priceRange.minVariantPrice.currencyCode}{' '}
+                      {currentPrice.toFixed(2)}
+                    </p>
+                    {hasDiscount && (
+                      <p className="text-sm text-muted-foreground line-through">
+                        {product.node.priceRange.minVariantPrice.currencyCode}{' '}
+                        {comparePrice.toFixed(2)}
+                      </p>
+                    )}
+                  </div>
                 </Link>
               </StaggerItem>
             );
