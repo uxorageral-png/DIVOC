@@ -6,6 +6,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -18,6 +20,8 @@ import { cn } from '@/lib/utils';
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [mobileFeminineOpen, setMobileFeminineOpen] = useState(false);
+  const [mobileMasculineOpen, setMobileMasculineOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
   const totalItems = useCartStore(state => state.getTotalItems());
@@ -30,10 +34,13 @@ export function Header() {
     { href: '/contact', label: t.nav.contact },
   ];
 
-  const productSubLinks = [
-    { href: '/products', label: t.nav.allProducts },
-    { href: '/products/hoodies', label: t.nav.hoodies },
-    { href: '/products/tshirts', label: t.nav.tshirts },
+  const feminineSubLinks = [
+    { href: '/products/feminine/hoodies', label: t.nav.hoodies },
+    { href: '/products/feminine/tshirts', label: t.nav.tshirts },
+  ];
+  const masculineSubLinks = [
+    { href: '/products/masculine/hoodies', label: t.nav.hoodies },
+    { href: '/products/masculine/tshirts', label: t.nav.tshirts },
   ];
 
   const currentLang = languages.find(l => l.code === language);
@@ -77,13 +84,45 @@ export function Header() {
                   <ChevronDown className="h-3 w-3" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="bg-card border-border w-48">
-                {productSubLinks.map((link) => (
+              <DropdownMenuContent align="start" className="bg-card border-border w-56">
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link
+                    to="/products"
+                    className={cn(
+                      "w-full",
+                      location.pathname === '/products' ? 'text-primary bg-accent/50' : ''
+                    )}
+                  >
+                    {t.nav.allProducts}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
+                  {t.nav.feminine}
+                </DropdownMenuLabel>
+                {feminineSubLinks.map((link) => (
                   <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
                     <Link
                       to={link.href}
                       className={cn(
-                        "w-full",
+                        "w-full pl-4",
+                        location.pathname === link.href ? 'text-primary bg-accent/50' : ''
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
+                  {t.nav.masculine}
+                </DropdownMenuLabel>
+                {masculineSubLinks.map((link) => (
+                  <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
+                    <Link
+                      to={link.href}
+                      className={cn(
+                        "w-full pl-4",
                         location.pathname === link.href ? 'text-primary bg-accent/50' : ''
                       )}
                     >
@@ -232,22 +271,85 @@ export function Header() {
                       </button>
                       {mobileProductsOpen && (
                         <div className="pl-4 flex flex-col gap-1 mt-1">
-                          {productSubLinks.map((link) => (
-                            <Link
-                              key={link.href}
-                              to={link.href}
-                              onClick={() => {
-                                setIsOpen(false);
-                                setMobileProductsOpen(false);
-                              }}
-                              className={cn(
-                                "text-lg font-medium tracking-wide transition-colors hover:text-primary py-2",
-                                location.pathname === link.href ? 'text-primary' : 'text-muted-foreground'
-                              )}
-                            >
-                              {link.label}
-                            </Link>
-                          ))}
+                          <Link
+                            to="/products"
+                            onClick={() => {
+                              setIsOpen(false);
+                              setMobileProductsOpen(false);
+                            }}
+                            className={cn(
+                              "text-lg font-medium tracking-wide transition-colors hover:text-primary py-2",
+                              location.pathname === '/products' ? 'text-primary' : 'text-muted-foreground'
+                            )}
+                          >
+                            {t.nav.allProducts}
+                          </Link>
+
+                          {/* Feminine submenu */}
+                          <button
+                            onClick={() => setMobileFeminineOpen(!mobileFeminineOpen)}
+                            className={cn(
+                              "flex items-center justify-between w-full text-lg font-medium tracking-wide transition-colors hover:text-primary py-2",
+                              location.pathname.startsWith('/products/feminine') ? 'text-primary' : 'text-muted-foreground'
+                            )}
+                          >
+                            {t.nav.feminine}
+                            <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", mobileFeminineOpen ? 'rotate-180' : '')} />
+                          </button>
+                          {mobileFeminineOpen && (
+                            <div className="pl-4 flex flex-col gap-1">
+                              {feminineSubLinks.map((link) => (
+                                <Link
+                                  key={link.href}
+                                  to={link.href}
+                                  onClick={() => {
+                                    setIsOpen(false);
+                                    setMobileProductsOpen(false);
+                                    setMobileFeminineOpen(false);
+                                  }}
+                                  className={cn(
+                                    "text-base font-medium tracking-wide transition-colors hover:text-primary py-2",
+                                    location.pathname === link.href ? 'text-primary' : 'text-muted-foreground'
+                                  )}
+                                >
+                                  {link.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Masculine submenu */}
+                          <button
+                            onClick={() => setMobileMasculineOpen(!mobileMasculineOpen)}
+                            className={cn(
+                              "flex items-center justify-between w-full text-lg font-medium tracking-wide transition-colors hover:text-primary py-2",
+                              location.pathname.startsWith('/products/masculine') ? 'text-primary' : 'text-muted-foreground'
+                            )}
+                          >
+                            {t.nav.masculine}
+                            <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", mobileMasculineOpen ? 'rotate-180' : '')} />
+                          </button>
+                          {mobileMasculineOpen && (
+                            <div className="pl-4 flex flex-col gap-1">
+                              {masculineSubLinks.map((link) => (
+                                <Link
+                                  key={link.href}
+                                  to={link.href}
+                                  onClick={() => {
+                                    setIsOpen(false);
+                                    setMobileProductsOpen(false);
+                                    setMobileMasculineOpen(false);
+                                  }}
+                                  className={cn(
+                                    "text-base font-medium tracking-wide transition-colors hover:text-primary py-2",
+                                    location.pathname === link.href ? 'text-primary' : 'text-muted-foreground'
+                                  )}
+                                >
+                                  {link.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
