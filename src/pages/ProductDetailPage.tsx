@@ -54,12 +54,18 @@ export default function ProductDetailPage() {
   }, [handle]);
 
   const getSelectedVariant = () => {
-    if (!product || !selectedSize) return null;
-    return product.variants.edges.find(v => 
-      v.node.selectedOptions.some(opt => 
-        opt.name.toLowerCase() === 'size' && opt.value === selectedSize
-      )
-    )?.node;
+    if (!product) return null;
+    // If the product has a size option, match by selected size
+    if (selectedSize) {
+      const match = product.variants.edges.find(v =>
+        v.node.selectedOptions.some(opt =>
+          opt.name.toLowerCase() === 'size' && opt.value === selectedSize
+        )
+      )?.node;
+      if (match) return match;
+    }
+    // Fallback: product has no size option (e.g. single default variant)
+    return product.variants.edges[0]?.node ?? null;
   };
 
   const handleAddToCart = async () => {
@@ -307,7 +313,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-3">
                 <Button
                   onClick={handleAddToCart}
-                  disabled={!isAvailable || isCartLoading || !selectedSize}
+                  disabled={!isAvailable || isCartLoading || (!!sizeOption && !selectedSize)}
                   size="lg"
                   className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 h-14 text-base font-semibold"
                 >
