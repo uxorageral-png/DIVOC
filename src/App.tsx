@@ -12,6 +12,7 @@ import Index from "./pages/Index";
 import ProductsPage from "./pages/ProductsPage";
 import HoodiesPage from "./pages/HoodiesPage";
 import TShirtsPage from "./pages/TShirtsPage";
+import CategoryPage from "./pages/CategoryPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
@@ -37,6 +38,10 @@ function AppRoutes() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/hoodies" element={<HoodiesPage />} />
           <Route path="/products/tshirts" element={<TShirtsPage />} />
+          <Route path="/products/feminine/hoodies" element={<CategoryPage gender="feminine" productType="hoodies" />} />
+          <Route path="/products/feminine/tshirts" element={<CategoryPage gender="feminine" productType="tshirts" />} />
+          <Route path="/products/masculine/hoodies" element={<CategoryPage gender="masculine" productType="hoodies" />} />
+          <Route path="/products/masculine/tshirts" element={<CategoryPage gender="masculine" productType="tshirts" />} />
           <Route path="/product/:handle" element={<ProductDetailPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
