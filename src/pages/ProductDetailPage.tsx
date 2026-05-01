@@ -11,12 +11,18 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { RelatedProducts } from '@/components/products/RelatedProducts';
 
+const normalizeOptionName = (name: string) => name.trim().toLowerCase();
+const isDefaultOption = (option: { name: string; values: string[] }) =>
+  normalizeOptionName(option.name) === 'title' && option.values.every(value => value === 'Default Title');
+const isSizeOption = (name: string) => ['size', 'tamanho', 'taille'].includes(normalizeOptionName(name));
+const isColorOption = (name: string) => ['color', 'colour', 'cor', 'couleur'].includes(normalizeOptionName(name));
+
 export default function ProductDetailPage() {
   const { handle } = useParams<{ handle: string }>();
   const { t } = useLanguage();
   const [product, setProduct] = useState<ShopifyProduct['node'] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const addItem = useCartStore(state => state.addItem);
@@ -28,22 +34,13 @@ export default function ProductDetailPage() {
       try {
         const data = await fetchProductByHandle(handle);
         setProduct(data);
-        // Auto-select first available size
-        if (data?.options) {
-          const sizeOption = data.options.find(opt => opt.name.toLowerCase() === 'size');
-          if (sizeOption?.values) {
-            // Find first available size
-            const firstAvailableSize = sizeOption.values.find(size => {
-              const variant = data.variants.edges.find(v =>
-                v.node.selectedOptions.some(opt => 
-                  opt.name.toLowerCase() === 'size' && opt.value === size
-                )
-              )?.node;
-              return variant?.availableForSale ?? false;
-            });
-            setSelectedSize(firstAvailableSize || sizeOption.values[0]);
-          }
-        }
+        const firstAvailableVariant = data?.variants.edges.find(v => v.node.availableForSale)?.node
+          ?? data?.variants.edges[0]?.node;
+        const initialOptions = firstAvailableVariant?.selectedOptions.reduce<Record<string, string>>((acc, opt) => {
+          acc[opt.name] = opt.value;
+          return acc;
+        }, {});
+        setSelectedOptions(initialOptions || {});
       } catch (error) {
         console.error('Failed to fetch product:', error);
       } finally {
@@ -55,18 +52,32 @@ export default function ProductDetailPage() {
 
   const getSelectedVariant = () => {
     if (!product) return null;
-    // If the product has a size option, match by selected size
-    if (selectedSize) {
+    const visibleOptions = product.options.filter(option => !isDefaultOption(option));
+    if (visibleOptions.length > 0) {
       const match = product.variants.edges.find(v =>
-        v.node.selectedOptions.some(opt =>
-          opt.name.toLowerCase() === 'size' && opt.value === selectedSize
+        visibleOptions.every(option =>
+          v.node.selectedOptions.some(selected =>
+            selected.name === option.name && selected.value === selectedOptions[option.name]
+          )
         )
       )?.node;
       if (match) return match;
     }
-    // Fallback: product has no size option (e.g. single default variant)
     return product.variants.edges[0]?.node ?? null;
   };
+
+  const isOptionValueAvailable = (optionName: string, value: string) => {
+    if (!product) return false;
+    const nextOptions = { ...selectedOptions, [optionName]: value };
+
+    return product.variants.edges.some(v =>
+      v.node.availableForSale &&
+      v.node.selectedOptions.every(opt => nextOptions[opt.name] ? nextOptions[opt.name] === opt.value : true)
+    );
+  };
+
+  const formatSelectedOptions = () =>
+    Object.values(selectedOptions).filter(Boolean).join(' / ');
 
   const handleAddToCart = async () => {
     const variant = getSelectedVariant();
@@ -82,7 +93,7 @@ export default function ProductDetailPage() {
     });
     
     toast.success(t.cart.added, {
-      description: `${product.title} - ${selectedSize} × ${quantity}`,
+      description: `${product.title}${formatSelectedOptions() ? ` - ${formatSelectedOptions()}` : ''} × ${quantity}`,
     });
     
     // Reset quantity after adding
@@ -96,7 +107,8 @@ export default function ProductDetailPage() {
   const selectedVariant = getSelectedVariant();
   const isAvailable = selectedVariant?.availableForSale ?? false;
   const images = product?.images.edges || [];
-  const sizeOption = product?.options.find(opt => opt.name.toLowerCase() === 'size');
+  const visibleOptions = product?.options.filter(option => !isDefaultOption(option)) || [];
+  const hasUnselectedOptions = visibleOptions.some(option => !selectedOptions[option.name]);
 
   const currentAmount = parseFloat(
     selectedVariant?.price.amount || product?.priceRange.minVariantPrice.amount || '0'
@@ -274,40 +286,40 @@ export default function ProductDetailPage() {
                 </p>
               </div>
 
-              {/* Size Selector */}
-              {sizeOption && (
-                <div className="mb-8">
-                  <h3 className="font-semibold text-foreground mb-3">{t.product.size}</h3>
+              {/* Variant Options */}
+              {visibleOptions.map((option) => (
+                <div key={option.name} className="mb-8">
+                  <h3 className="font-semibold text-foreground mb-3">
+                    {isSizeOption(option.name) ? t.product.size : option.name}
+                  </h3>
                   <div className="flex flex-wrap gap-2">
-                    {sizeOption.values.map((size) => {
-                      const sizeVariant = product.variants.edges.find(v =>
-                        v.node.selectedOptions.some(opt => 
-                          opt.name.toLowerCase() === 'size' && opt.value === size
-                        )
-                      )?.node;
-                      const isSizeAvailable = sizeVariant?.availableForSale ?? true;
+                    {option.values.map((value) => {
+                      const isValueAvailable = isOptionValueAvailable(option.name, value);
 
                       return (
                         <button
-                          key={size}
-                          onClick={() => setSelectedSize(size)}
-                          disabled={!isSizeAvailable}
+                          key={value}
+                          onClick={() => setSelectedOptions(prev => ({ ...prev, [option.name]: value }))}
+                          disabled={!isValueAvailable}
                           className={cn(
                             "min-w-[3rem] px-4 py-3 rounded-md border-2 font-medium transition-all",
-                            selectedSize === size
+                            selectedOptions[option.name] === value
                               ? "border-primary bg-primary text-primary-foreground"
-                              : isSizeAvailable
+                              : isValueAvailable
                                 ? "border-border hover:border-primary text-foreground"
                                 : "border-border/50 text-muted-foreground/50 cursor-not-allowed line-through"
                           )}
                         >
-                          {size}
+                          {isColorOption(option.name) && (
+                            <span className="sr-only">{option.name}: </span>
+                          )}
+                          {value}
                         </button>
                       );
                     })}
                   </div>
                 </div>
-              )}
+              ))}
 
               {/* Quantity Selector */}
               <div className="mb-8">
@@ -341,7 +353,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-3">
                 <Button
                   onClick={handleAddToCart}
-                  disabled={!isAvailable || isCartLoading || (!!sizeOption && !selectedSize)}
+                  disabled={!isAvailable || isCartLoading || hasUnselectedOptions}
                   size="lg"
                   className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 h-14 text-base font-semibold"
                 >
