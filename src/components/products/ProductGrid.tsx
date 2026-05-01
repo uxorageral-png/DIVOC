@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
@@ -80,6 +81,13 @@ export function ProductGrid({ query, title }: ProductGridProps) {
           const variant = product.node.variants.edges[0]?.node;
           const image = product.node.images.edges[0]?.node;
           const isAvailable = variant?.availableForSale;
+          const currentPrice = parseFloat(product.node.priceRange.minVariantPrice.amount);
+          const compareAmount = product.node.compareAtPriceRange?.minVariantPrice.amount;
+          const comparePrice = compareAmount ? parseFloat(compareAmount) : 0;
+          const hasDiscount = comparePrice > currentPrice;
+          const discountPercent = hasDiscount
+            ? Math.round(((comparePrice - currentPrice) / comparePrice) * 100)
+            : 0;
 
           return (
             <Link
@@ -99,7 +107,13 @@ export function ProductGrid({ query, title }: ProductGridProps) {
                     <ShoppingBag className="h-12 w-12 text-muted-foreground" />
                   </div>
                 )}
-                
+
+                {hasDiscount && (
+                  <Badge className="absolute top-3 right-3 bg-destructive text-destructive-foreground text-xs font-bold tracking-wider">
+                    -{discountPercent}%
+                  </Badge>
+                )}
+
                 {/* Quick Add Button */}
                 <div className="absolute bottom-4 left-4 right-4 opacity-0 translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                   <Button
@@ -118,10 +132,18 @@ export function ProductGrid({ query, title }: ProductGridProps) {
               <p className="text-sm text-muted-foreground mb-1">
                 {product.node.productType || product.node.variants.edges[0]?.node.title}
               </p>
-              <p className="text-primary font-semibold">
-                {product.node.priceRange.minVariantPrice.currencyCode}{' '}
-                {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}
-              </p>
+              <div className="flex items-baseline gap-2">
+                <p className="text-primary font-semibold">
+                  {product.node.priceRange.minVariantPrice.currencyCode}{' '}
+                  {currentPrice.toFixed(2)}
+                </p>
+                {hasDiscount && (
+                  <p className="text-sm text-muted-foreground line-through">
+                    {product.node.priceRange.minVariantPrice.currencyCode}{' '}
+                    {comparePrice.toFixed(2)}
+                  </p>
+                )}
+              </div>
             </Link>
           );
         })}
