@@ -107,7 +107,8 @@ export default function ProductDetailPage() {
   const selectedVariant = getSelectedVariant();
   const isAvailable = selectedVariant?.availableForSale ?? false;
   const images = product?.images.edges || [];
-  const sizeOption = product?.options.find(opt => opt.name.toLowerCase() === 'size');
+  const visibleOptions = product?.options.filter(option => !isDefaultOption(option)) || [];
+  const hasUnselectedOptions = visibleOptions.some(option => !selectedOptions[option.name]);
 
   const currentAmount = parseFloat(
     selectedVariant?.price.amount || product?.priceRange.minVariantPrice.amount || '0'
@@ -285,40 +286,40 @@ export default function ProductDetailPage() {
                 </p>
               </div>
 
-              {/* Size Selector */}
-              {sizeOption && (
-                <div className="mb-8">
-                  <h3 className="font-semibold text-foreground mb-3">{t.product.size}</h3>
+              {/* Variant Options */}
+              {visibleOptions.map((option) => (
+                <div key={option.name} className="mb-8">
+                  <h3 className="font-semibold text-foreground mb-3">
+                    {isSizeOption(option.name) ? t.product.size : option.name}
+                  </h3>
                   <div className="flex flex-wrap gap-2">
-                    {sizeOption.values.map((size) => {
-                      const sizeVariant = product.variants.edges.find(v =>
-                        v.node.selectedOptions.some(opt => 
-                          opt.name.toLowerCase() === 'size' && opt.value === size
-                        )
-                      )?.node;
-                      const isSizeAvailable = sizeVariant?.availableForSale ?? true;
+                    {option.values.map((value) => {
+                      const isValueAvailable = isOptionValueAvailable(option.name, value);
 
                       return (
                         <button
-                          key={size}
-                          onClick={() => setSelectedSize(size)}
-                          disabled={!isSizeAvailable}
+                          key={value}
+                          onClick={() => setSelectedOptions(prev => ({ ...prev, [option.name]: value }))}
+                          disabled={!isValueAvailable}
                           className={cn(
                             "min-w-[3rem] px-4 py-3 rounded-md border-2 font-medium transition-all",
-                            selectedSize === size
+                            selectedOptions[option.name] === value
                               ? "border-primary bg-primary text-primary-foreground"
-                              : isSizeAvailable
+                              : isValueAvailable
                                 ? "border-border hover:border-primary text-foreground"
                                 : "border-border/50 text-muted-foreground/50 cursor-not-allowed line-through"
                           )}
                         >
-                          {size}
+                          {isColorOption(option.name) && (
+                            <span className="sr-only">{option.name}: </span>
+                          )}
+                          {value}
                         </button>
                       );
                     })}
                   </div>
                 </div>
-              )}
+              ))}
 
               {/* Quantity Selector */}
               <div className="mb-8">
@@ -352,7 +353,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-3">
                 <Button
                   onClick={handleAddToCart}
-                  disabled={!isAvailable || isCartLoading || (!!sizeOption && !selectedSize)}
+                  disabled={!isAvailable || isCartLoading || hasUnselectedOptions}
                   size="lg"
                   className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 h-14 text-base font-semibold"
                 >
