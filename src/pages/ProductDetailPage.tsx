@@ -11,12 +11,18 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { RelatedProducts } from '@/components/products/RelatedProducts';
 
+const normalizeOptionName = (name: string) => name.trim().toLowerCase();
+const isDefaultOption = (option: { name: string; values: string[] }) =>
+  normalizeOptionName(option.name) === 'title' && option.values.every(value => value === 'Default Title');
+const isSizeOption = (name: string) => ['size', 'tamanho', 'taille'].includes(normalizeOptionName(name));
+const isColorOption = (name: string) => ['color', 'colour', 'cor', 'couleur'].includes(normalizeOptionName(name));
+
 export default function ProductDetailPage() {
   const { handle } = useParams<{ handle: string }>();
   const { t } = useLanguage();
   const [product, setProduct] = useState<ShopifyProduct['node'] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const addItem = useCartStore(state => state.addItem);
@@ -28,22 +34,13 @@ export default function ProductDetailPage() {
       try {
         const data = await fetchProductByHandle(handle);
         setProduct(data);
-        // Auto-select first available size
-        if (data?.options) {
-          const sizeOption = data.options.find(opt => opt.name.toLowerCase() === 'size');
-          if (sizeOption?.values) {
-            // Find first available size
-            const firstAvailableSize = sizeOption.values.find(size => {
-              const variant = data.variants.edges.find(v =>
-                v.node.selectedOptions.some(opt => 
-                  opt.name.toLowerCase() === 'size' && opt.value === size
-                )
-              )?.node;
-              return variant?.availableForSale ?? false;
-            });
-            setSelectedSize(firstAvailableSize || sizeOption.values[0]);
-          }
-        }
+        const firstAvailableVariant = data?.variants.edges.find(v => v.node.availableForSale)?.node
+          ?? data?.variants.edges[0]?.node;
+        const initialOptions = firstAvailableVariant?.selectedOptions.reduce<Record<string, string>>((acc, opt) => {
+          acc[opt.name] = opt.value;
+          return acc;
+        }, {});
+        setSelectedOptions(initialOptions || {});
       } catch (error) {
         console.error('Failed to fetch product:', error);
       } finally {
@@ -55,18 +52,32 @@ export default function ProductDetailPage() {
 
   const getSelectedVariant = () => {
     if (!product) return null;
-    // If the product has a size option, match by selected size
-    if (selectedSize) {
+    const visibleOptions = product.options.filter(option => !isDefaultOption(option));
+    if (visibleOptions.length > 0) {
       const match = product.variants.edges.find(v =>
-        v.node.selectedOptions.some(opt =>
-          opt.name.toLowerCase() === 'size' && opt.value === selectedSize
+        visibleOptions.every(option =>
+          v.node.selectedOptions.some(selected =>
+            selected.name === option.name && selected.value === selectedOptions[option.name]
+          )
         )
       )?.node;
       if (match) return match;
     }
-    // Fallback: product has no size option (e.g. single default variant)
     return product.variants.edges[0]?.node ?? null;
   };
+
+  const isOptionValueAvailable = (optionName: string, value: string) => {
+    if (!product) return false;
+    const nextOptions = { ...selectedOptions, [optionName]: value };
+
+    return product.variants.edges.some(v =>
+      v.node.availableForSale &&
+      v.node.selectedOptions.every(opt => nextOptions[opt.name] ? nextOptions[opt.name] === opt.value : true)
+    );
+  };
+
+  const formatSelectedOptions = () =>
+    Object.values(selectedOptions).filter(Boolean).join(' / ');
 
   const handleAddToCart = async () => {
     const variant = getSelectedVariant();
@@ -82,7 +93,7 @@ export default function ProductDetailPage() {
     });
     
     toast.success(t.cart.added, {
-      description: `${product.title} - ${selectedSize} × ${quantity}`,
+      description: `${product.title}${formatSelectedOptions() ? ` - ${formatSelectedOptions()}` : ''} × ${quantity}`,
     });
     
     // Reset quantity after adding
