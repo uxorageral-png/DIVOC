@@ -25,11 +25,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('divoc-language') as Language;
-      if (saved && ['pt', 'en', 'fr'].includes(saved)) {
         return saved;
       }
     }
-    return 'pt';
+    return 'fr';
   });
 
   const setLanguage = (lang: Language) => {
@@ -60,9 +59,9 @@ export function useLanguage() {
   }
 
   return {
-    language: 'pt' as Language,
+    language: 'fr' as Language,
     setLanguage: () => undefined,
-    t: translations.pt,
+    t: translations.fr,
   };
 }
 
