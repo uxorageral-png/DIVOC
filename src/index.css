@@ -122,9 +122,8 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  /* Force dark mode by default for DIVOC */
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 }
 
