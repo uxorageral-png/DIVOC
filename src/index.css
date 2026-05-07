@@ -10,15 +10,15 @@
 
 @layer base {
   :root {
-    /* DIVOC Brand Colors - Light mode: clean, bright, pure whites */
+    /* DIVOC Brand Colors - Light mode (rarely used, dark is primary) */
     --background: 0 0% 100%;
-    --foreground: 30 12% 10%;
+    --foreground: 30 10% 8%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 30 12% 10%;
+    --card: 30 5% 98%;
+    --card-foreground: 30 10% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 12% 10%;
+    --popover-foreground: 30 10% 8%;
 
     /* Gold accent */
     --primary: 43 74% 49%;
@@ -28,8 +28,8 @@
     --secondary: 25 30% 25%;
     --secondary-foreground: 43 30% 90%;
 
-    --muted: 30 8% 96%;
-    --muted-foreground: 30 8% 38%;
+    --muted: 30 10% 90%;
+    --muted-foreground: 30 10% 40%;
 
     /* Gold accent */
     --accent: 43 74% 49%;
@@ -38,8 +38,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 8% 92%;
-    --input: 30 8% 92%;
+    --border: 30 10% 85%;
+    --input: 30 10% 85%;
     --ring: 43 74% 49%;
 
     --radius: 0.5rem;
@@ -122,8 +122,9 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  /* Force dark mode by default for DIVOC */
   :root {
-    color-scheme: light;
+    color-scheme: dark;
   }
 }
 
