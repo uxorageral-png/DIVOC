@@ -73,7 +73,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <div className="dark">
+      <div>
         <AppContent />
       </div>
     </TooltipProvider>
