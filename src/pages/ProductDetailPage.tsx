@@ -289,21 +289,52 @@ export default function ProductDetailPage() {
               {/* Variant Options */}
               {visibleOptions.map((option) => (
                 <div key={option.name} className="mb-8">
-                  <h3 className="font-semibold text-foreground mb-3">
+                  <h3 id={`option-label-${option.name}`} className="font-semibold text-foreground mb-3">
                     {isSizeOption(option.name) ? t.product.size : option.name}
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {option.values.map((value) => {
+                  <div
+                    role="radiogroup"
+                    aria-labelledby={`option-label-${option.name}`}
+                    className="flex flex-wrap gap-2"
+                  >
+                    {option.values.map((value, valueIndex) => {
                       const isValueAvailable = isOptionValueAvailable(option.name, value);
+                      const isSelected = selectedOptions[option.name] === value;
 
                       return (
                         <button
                           key={value}
+                          type="button"
+                          role="radio"
+                          aria-checked={isSelected}
+                          aria-label={`${option.name}: ${value}${!isValueAvailable ? ' (esgotado)' : ''}`}
+                          tabIndex={isSelected || (!selectedOptions[option.name] && valueIndex === 0) ? 0 : -1}
                           onClick={() => setSelectedOptions(prev => ({ ...prev, [option.name]: value }))}
+                          onKeyDown={(e) => {
+                            const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
+                            if (!keys.includes(e.key)) return;
+                            e.preventDefault();
+                            const values = option.values;
+                            let nextIndex = valueIndex;
+                            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                              nextIndex = (valueIndex + 1) % values.length;
+                            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                              nextIndex = (valueIndex - 1 + values.length) % values.length;
+                            } else if (e.key === 'Home') {
+                              nextIndex = 0;
+                            } else if (e.key === 'End') {
+                              nextIndex = values.length - 1;
+                            }
+                            const nextValue = values[nextIndex];
+                            setSelectedOptions(prev => ({ ...prev, [option.name]: nextValue }));
+                            const parent = (e.currentTarget as HTMLElement).parentElement;
+                            const next = parent?.querySelectorAll<HTMLButtonElement>('button[role="radio"]')[nextIndex];
+                            next?.focus();
+                          }}
                           disabled={!isValueAvailable}
                           className={cn(
-                            "min-w-[3rem] px-4 py-3 rounded-md border-2 font-medium transition-all",
-                            selectedOptions[option.name] === value
+                            "min-w-[3rem] px-4 py-3 rounded-md border-2 font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                            isSelected
                               ? "border-primary bg-primary text-primary-foreground"
                               : isValueAvailable
                                 ? "border-border hover:border-primary text-foreground"
