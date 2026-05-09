@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Twitter } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -19,25 +19,26 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-card border-t border-border">
+    <footer className="bg-secondary/40 border-t border-border">
       {/* Newsletter Section */}
-      <div className="container mx-auto px-4 lg:px-8 py-16">
+      <div className="container mx-auto px-4 lg:px-8 py-20 lg:py-24">
         <div className="max-w-xl mx-auto text-center">
-          <h3 className="text-2xl lg:text-3xl font-bold tracking-wide mb-4 text-foreground">
+          <span className="text-xs font-semibold tracking-[0.25em] uppercase text-primary">Newsletter</span>
+          <h3 className="mt-3 text-2xl lg:text-3xl font-bold tracking-tight mb-3 text-foreground">
             {t.footer.newsletter.title}
           </h3>
-          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
+          <form onSubmit={handleSubscribe} className="mt-8 flex flex-col sm:flex-row gap-3">
             <Input
               type="email"
               placeholder={t.footer.newsletter.placeholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-background border-border text-foreground placeholder:text-muted-foreground"
+              className="flex-1 h-12 bg-background border-border text-foreground placeholder:text-muted-foreground rounded-full px-5"
               required
             />
             <Button 
               type="submit" 
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium tracking-wide"
+              className="h-12 px-8 bg-foreground text-background hover:bg-foreground/90 font-medium tracking-wide rounded-full"
             >
               {t.footer.newsletter.button}
             </Button>
@@ -94,32 +95,15 @@ export function Footer() {
             {/* Social */}
             <div>
               <h4 className="font-semibold text-foreground mb-4">{t.footer.social}</h4>
-              <div className="flex gap-4">
-                <a 
-                  href="https://www.instagram.com/divoc.luxury?igsh=Zjl4cmtkeDFocGt1" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://facebook.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Twitter className="h-5 w-5" />
-                </a>
-              </div>
+              <a 
+                href="https://www.instagram.com/divoc.luxury?igsh=Zjl4cmtkeDFocGt1" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Instagram className="h-5 w-5" />
+                @divoc.luxury
+              </a>
             </div>
           </div>
         </div>
