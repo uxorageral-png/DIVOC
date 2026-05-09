@@ -2,109 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-/* DIVOC Design System
-   Premium streetwear brand with African roots
-   Colors: Black (primary), Brown (secondary), Gold (accents)
-   All colors in HSL format
+/* DIVOC Design System — Light Premium
+   Luxury streetwear with African roots.
+   Palette: Ivory / Warm neutrals / Charcoal / Gold accent.
+   All colors HSL.
 */
 
 @layer base {
   :root {
-    /* DIVOC Brand Colors - Light mode (rarely used, dark is primary) */
-    --background: 0 0% 100%;
-    --foreground: 30 10% 8%;
+    /* Surfaces */
+    --background: 40 25% 98%;          /* Ivory */
+    --foreground: 30 12% 12%;          /* Deep charcoal */
 
-    --card: 30 5% 98%;
-    --card-foreground: 30 10% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 30 12% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 10% 8%;
+    --popover-foreground: 30 12% 12%;
 
-    /* Gold accent */
-    --primary: 43 74% 49%;
-    --primary-foreground: 30 10% 8%;
+    /* Brand — Gold */
+    --primary: 38 65% 42%;             /* Refined gold (better contrast on white) */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 43 78% 58%;
 
-    /* Brown secondary */
-    --secondary: 25 30% 25%;
-    --secondary-foreground: 43 30% 90%;
+    /* Neutral secondary (warm gray) */
+    --secondary: 35 15% 94%;
+    --secondary-foreground: 30 12% 16%;
 
-    --muted: 30 10% 90%;
-    --muted-foreground: 30 10% 40%;
+    --muted: 35 15% 95%;
+    --muted-foreground: 30 8% 42%;
 
-    /* Gold accent */
-    --accent: 43 74% 49%;
-    --accent-foreground: 30 10% 8%;
+    /* Subtle gold accent surface */
+    --accent: 40 30% 96%;
+    --accent-foreground: 30 12% 12%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 70% 48%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 10% 85%;
-    --input: 30 10% 85%;
-    --ring: 43 74% 49%;
+    --border: 30 10% 90%;
+    --input: 30 10% 88%;
+    --ring: 38 65% 42%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Custom DIVOC tokens */
-    --gold: 43 74% 49%;
-    --gold-light: 43 74% 60%;
-    --gold-dark: 43 74% 40%;
+    /* DIVOC tokens */
+    --gold: 38 65% 42%;
+    --gold-light: 43 78% 58%;
+    --gold-dark: 35 70% 32%;
     --brown: 25 30% 25%;
-    --brown-light: 25 25% 35%;
+    --brown-light: 25 25% 45%;
     --brown-dark: 25 35% 15%;
-    --black: 30 10% 8%;
-    --cream: 43 30% 90%;
+    --black: 30 12% 10%;
+    --cream: 40 30% 96%;
+    --ivory: 40 25% 98%;
 
-    --sidebar-background: 30 10% 8%;
-    --sidebar-foreground: 43 30% 90%;
-    --sidebar-primary: 43 74% 49%;
-    --sidebar-primary-foreground: 30 10% 8%;
-    --sidebar-accent: 25 30% 20%;
-    --sidebar-accent-foreground: 43 30% 90%;
-    --sidebar-border: 25 30% 20%;
-    --sidebar-ring: 43 74% 49%;
-  }
+    /* Premium gradients */
+    --gradient-hero: linear-gradient(180deg, hsl(40 25% 98% / 0.2) 0%, hsl(40 25% 98% / 0.85) 70%, hsl(40 25% 98%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 65% 42%) 0%, hsl(43 78% 58%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(40 25% 99%) 0%, hsl(35 15% 96%) 100%);
 
-  /* DIVOC Dark Mode - Primary theme */
-  .dark {
-    --background: 30 10% 6%;
-    --foreground: 43 30% 92%;
+    /* Premium shadows (warm, soft) */
+    --shadow-xs: 0 1px 2px 0 hsl(30 12% 12% / 0.04);
+    --shadow-sm: 0 1px 3px 0 hsl(30 12% 12% / 0.06), 0 1px 2px -1px hsl(30 12% 12% / 0.04);
+    --shadow-md: 0 4px 12px -2px hsl(30 12% 12% / 0.08), 0 2px 4px -2px hsl(30 12% 12% / 0.04);
+    --shadow-lg: 0 12px 32px -8px hsl(30 12% 12% / 0.12), 0 4px 8px -4px hsl(30 12% 12% / 0.06);
+    --shadow-xl: 0 24px 56px -12px hsl(30 12% 12% / 0.16);
+    --shadow-gold: 0 8px 24px -8px hsl(38 65% 42% / 0.35);
 
-    --card: 30 10% 8%;
-    --card-foreground: 43 30% 92%;
-
-    --popover: 30 10% 8%;
-    --popover-foreground: 43 30% 92%;
-
-    /* Gold accent */
-    --primary: 43 74% 49%;
-    --primary-foreground: 30 10% 8%;
-
-    /* Brown secondary */
-    --secondary: 25 30% 20%;
-    --secondary-foreground: 43 30% 90%;
-
-    --muted: 25 20% 15%;
-    --muted-foreground: 30 15% 60%;
-
-    /* Gold accent */
-    --accent: 43 74% 49%;
-    --accent-foreground: 30 10% 8%;
-
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 25 20% 18%;
-    --input: 25 20% 18%;
-    --ring: 43 74% 49%;
-
-    --sidebar-background: 30 10% 5%;
-    --sidebar-foreground: 43 30% 90%;
-    --sidebar-primary: 43 74% 49%;
-    --sidebar-primary-foreground: 30 10% 8%;
-    --sidebar-accent: 25 30% 15%;
-    --sidebar-accent-foreground: 43 30% 90%;
-    --sidebar-border: 25 20% 15%;
-    --sidebar-ring: 43 74% 49%;
+    /* Sidebar (kept dark for admin-style surfaces if used) */
+    --sidebar-background: 30 12% 10%;
+    --sidebar-foreground: 40 25% 95%;
+    --sidebar-primary: 43 78% 58%;
+    --sidebar-primary-foreground: 30 12% 10%;
+    --sidebar-accent: 25 20% 18%;
+    --sidebar-accent-foreground: 40 25% 95%;
+    --sidebar-border: 25 20% 18%;
+    --sidebar-ring: 43 78% 58%;
   }
 }
 
@@ -119,31 +92,68 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Force dark mode by default for DIVOC */
   :root {
-    color-scheme: dark;
+    color-scheme: light;
+  }
+
+  /* Refined focus rings */
+  :focus-visible {
+    outline: none;
+  }
+
+  /* Selection */
+  ::selection {
+    background: hsl(var(--primary) / 0.18);
+    color: hsl(var(--foreground));
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
 @layer utilities {
-  /* Gold gradient for special accents */
   .gradient-gold {
-    background: linear-gradient(135deg, hsl(43 74% 49%) 0%, hsl(43 74% 60%) 100%);
+    background: var(--gradient-gold);
   }
 
-  /* Subtle pattern overlay */
-  .pattern-overlay {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  .gradient-surface {
+    background: var(--gradient-surface);
   }
 
-  /* Text gold gradient */
   .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(43 74% 49%) 0%, hsl(43 74% 65%) 100%);
+    background: var(--gradient-gold);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .shadow-premium-sm { box-shadow: var(--shadow-sm); }
+  .shadow-premium-md { box-shadow: var(--shadow-md); }
+  .shadow-premium-lg { box-shadow: var(--shadow-lg); }
+  .shadow-premium-xl { box-shadow: var(--shadow-xl); }
+  .shadow-gold { box-shadow: var(--shadow-gold); }
+
+  .pattern-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Subtle hover lift */
+  .hover-lift {
+    transition: transform 300ms cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
   }
 }

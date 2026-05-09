@@ -73,9 +73,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <div className="dark">
-        <AppContent />
-      </div>
+      <AppContent />
     </TooltipProvider>
   </QueryClientProvider>
 );
