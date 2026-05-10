@@ -81,14 +81,14 @@ export function HeroSection() {
           >
             <Button
               asChild
-              className="h-12 sm:h-14 px-8 sm:px-10 rounded-full bg-white text-[hsl(30_12%_10%)] hover:bg-white/90 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase shadow-premium-lg transition-all"
+              className="h-12 px-8 rounded-full bg-white text-[hsl(30_12%_10%)] hover:bg-white/90 text-sm font-medium tracking-wide shadow-premium-md hover:shadow-premium-lg hover:-translate-y-0.5 transition-all duration-300"
             >
               <Link to="/products">{t.hero.cta}</Link>
             </Button>
             <Button
               asChild
               variant="outline"
-              className="h-12 sm:h-14 px-8 sm:px-10 rounded-full border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white hover:border-white/60 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase transition-all"
+              className="h-12 px-8 rounded-full border-white/40 bg-transparent text-white hover:bg-white hover:text-[hsl(30_12%_10%)] hover:border-white text-sm font-medium tracking-wide transition-all duration-300"
             >
               <Link to="/lookbook">Lookbook</Link>
             </Button>
