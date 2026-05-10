@@ -42,21 +42,21 @@ export function HeroSection() {
       {/* Content */}
       <motion.div
         style={{ opacity }}
-        className="relative z-10 container mx-auto px-6 lg:px-12 pb-24 lg:pb-0 pt-32 lg:pt-24"
+        className="relative z-10 container mx-auto px-6 sm:px-8 lg:px-12 pb-20 sm:pb-24 lg:pb-0 pt-28 sm:pt-32 lg:pt-24"
       >
-        <div className="max-w-2xl lg:max-w-3xl">
+        <div className="max-w-[18ch] sm:max-w-xl lg:max-w-3xl">
           <motion.span
-            className="inline-flex items-center gap-3 mb-8 text-[hsl(43_78%_70%)] text-[11px] font-semibold tracking-[0.32em] uppercase"
+            className="inline-flex items-center gap-3 mb-6 sm:mb-8 text-[hsl(43_78%_70%)] text-[10px] sm:text-[11px] font-semibold tracking-[0.28em] sm:tracking-[0.32em] uppercase"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <span className="h-px w-10 bg-[hsl(43_78%_70%)]/60" />
+            <span className="h-px w-8 sm:w-10 bg-[hsl(43_78%_70%)]/60" />
             Voice of African Union
           </motion.span>
 
           <motion.h1
-            className="font-display text-[clamp(3.25rem,9vw,7.5rem)] leading-[0.92] tracking-[-0.015em] text-white mb-8 [text-wrap:balance]"
+            className="font-display text-[clamp(2.75rem,11vw,7rem)] leading-[0.95] sm:leading-[0.92] tracking-[-0.015em] text-white mb-6 sm:mb-8 [text-wrap:balance] hyphens-none break-words"
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
@@ -65,7 +65,7 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="text-base lg:text-lg text-white/75 max-w-xl mb-12 leading-relaxed font-light"
+            className="text-[15px] sm:text-base lg:text-lg text-white/75 max-w-md sm:max-w-lg lg:max-w-xl mb-10 sm:mb-12 leading-relaxed font-light [text-wrap:pretty]"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -74,21 +74,21 @@ export function HeroSection() {
           </motion.p>
 
           <motion.div
-            className="flex items-center gap-4 flex-wrap"
+            className="flex items-center gap-3 sm:gap-4 flex-wrap"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <Button
               asChild
-              className="h-14 px-10 rounded-full bg-white text-[hsl(30_12%_10%)] hover:bg-white/90 text-sm font-semibold tracking-[0.08em] uppercase shadow-premium-lg transition-all"
+              className="h-12 sm:h-14 px-8 sm:px-10 rounded-full bg-white text-[hsl(30_12%_10%)] hover:bg-white/90 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase shadow-premium-lg transition-all"
             >
               <Link to="/products">{t.hero.cta}</Link>
             </Button>
             <Button
               asChild
               variant="outline"
-              className="h-14 px-10 rounded-full border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white hover:border-white/60 text-sm font-semibold tracking-[0.08em] uppercase transition-all"
+              className="h-12 sm:h-14 px-8 sm:px-10 rounded-full border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white hover:border-white/60 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase transition-all"
             >
               <Link to="/lookbook">Lookbook</Link>
             </Button>
