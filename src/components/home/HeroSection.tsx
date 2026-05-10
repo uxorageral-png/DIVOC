@@ -85,13 +85,6 @@ export function HeroSection() {
             >
               <Link to="/products">{t.hero.cta}</Link>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-12 px-8 rounded-full border-white/40 bg-transparent text-white hover:bg-white hover:text-[hsl(30_12%_10%)] hover:border-white text-sm font-medium tracking-wide transition-all duration-300"
-            >
-              <Link to="/lookbook">Lookbook</Link>
-            </Button>
           </motion.div>
         </div>
       </motion.div>
