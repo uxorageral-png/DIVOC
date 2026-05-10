@@ -29,13 +29,13 @@ export function HeroSection() {
         transition={{ duration: 1.6, ease: [0.25, 0.1, 0.25, 1] }}
       />
 
-      {/* Editorial gradient veils — warm, not grey */}
-      {/* Bottom-up shadow for text legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[hsl(30_15%_8%)]/85 via-[hsl(30_15%_8%)]/35 to-transparent" />
-      {/* Left-side darken for editorial focal point */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(30_15%_8%)]/70 via-[hsl(30_15%_8%)]/15 to-transparent" />
-      {/* Subtle warm wash */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(38_65%_42%/0.12),transparent_60%)]" />
+      {/* Editorial gradient veils — calibrated for WCAG AA on white text */}
+      {/* Bottom-up readability scrim: ~0.92 alpha at text band, fades up for cinematic depth */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_top,hsl(30_15%_6%/0.92)_0%,hsl(30_15%_6%/0.78)_28%,hsl(30_15%_6%/0.45)_55%,hsl(30_15%_6%/0.12)_80%,transparent_100%)]" />
+      {/* Left-side editorial darken behind copy */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(30_15%_6%/0.65)_0%,hsl(30_15%_6%/0.25)_45%,transparent_75%)]" />
+      {/* Subtle warm wash for brand temperature */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(38_65%_42%/0.10),transparent_60%)]" />
       {/* Soft fade into next section */}
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-background" />
 
@@ -56,7 +56,7 @@ export function HeroSection() {
           </motion.span>
 
           <motion.h1
-            className="font-display text-[clamp(2.75rem,11vw,7rem)] leading-[0.95] sm:leading-[0.92] tracking-[-0.015em] text-white mb-6 sm:mb-8 [text-wrap:balance] hyphens-none break-words"
+            className="font-display text-[clamp(2.75rem,11vw,7rem)] leading-[0.95] sm:leading-[0.92] tracking-[-0.015em] text-white mb-6 sm:mb-8 [text-wrap:balance] hyphens-none break-words [text-shadow:0_2px_24px_hsl(30_15%_4%/0.45)]"
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
@@ -65,7 +65,7 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="text-[15px] sm:text-base lg:text-lg text-white/75 max-w-md sm:max-w-lg lg:max-w-xl mb-10 sm:mb-12 leading-relaxed font-light [text-wrap:pretty]"
+            className="text-[15px] sm:text-base lg:text-lg text-white/90 max-w-md sm:max-w-lg lg:max-w-xl mb-10 sm:mb-12 leading-relaxed font-light [text-wrap:pretty] [text-shadow:0_1px_12px_hsl(30_15%_4%/0.5)]"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
