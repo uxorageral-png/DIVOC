@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, User, Globe, ChevronDown } from 'lucide-react';
+import { Menu, X, ShoppingBag, User, Globe, ChevronDown, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -47,25 +47,25 @@ export function Header() {
   const isProductsActive = location.pathname.startsWith('/products');
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-border/60 shadow-premium-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center h-16 lg:h-20 gap-4">
           {/* Logo */}
-          <Link 
-            to="/" 
-            className="text-2xl lg:text-3xl font-bold tracking-wider text-foreground hover:text-primary transition-colors"
+          <Link
+            to="/"
+            className="justify-self-start text-2xl lg:text-3xl font-bold tracking-[0.2em] text-foreground hover:text-primary transition-colors"
           >
             DIVOC
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation — centered */}
+          <nav className="hidden lg:flex items-center justify-center gap-10 justify-self-center">
             {/* Home Link */}
             <Link
               to="/"
               className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/' ? 'text-primary' : 'text-muted-foreground'
+                "relative text-[13px] font-medium tracking-[0.12em] uppercase transition-colors hover:text-foreground py-2",
+                location.pathname === '/' ? 'text-foreground after:absolute after:left-1/2 after:-translate-x-1/2 after:bottom-1 after:h-px after:w-6 after:bg-[hsl(var(--gold))]' : 'text-muted-foreground'
               )}
             >
               {t.nav.home}
@@ -76,8 +76,8 @@ export function Header() {
               <DropdownMenuTrigger asChild>
                 <button
                   className={cn(
-                    "inline-flex items-center gap-1 bg-transparent text-sm font-medium tracking-wide transition-colors hover:text-primary focus:outline-none",
-                    isProductsActive ? 'text-primary' : 'text-muted-foreground'
+                    "inline-flex items-center gap-1 bg-transparent text-[13px] font-medium tracking-[0.12em] uppercase transition-colors hover:text-foreground focus:outline-none py-2",
+                    isProductsActive ? 'text-foreground' : 'text-muted-foreground'
                   )}
                 >
                   {t.nav.products}
@@ -137,8 +137,8 @@ export function Header() {
             <Link
               to="/about"
               className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'
+                "text-[13px] font-medium tracking-[0.12em] uppercase transition-colors hover:text-foreground py-2",
+                location.pathname === '/about' ? 'text-foreground' : 'text-muted-foreground'
               )}
             >
               {t.nav.about}
@@ -146,8 +146,8 @@ export function Header() {
             <Link
               to="/contact"
               className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/contact' ? 'text-primary' : 'text-muted-foreground'
+                "text-[13px] font-medium tracking-[0.12em] uppercase transition-colors hover:text-foreground py-2",
+                location.pathname === '/contact' ? 'text-foreground' : 'text-muted-foreground'
               )}
             >
               {t.nav.contact}
@@ -155,8 +155,8 @@ export function Header() {
             <Link
               to="/faq"
               className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/faq' ? 'text-primary' : 'text-muted-foreground'
+                "text-[13px] font-medium tracking-[0.12em] uppercase transition-colors hover:text-foreground py-2",
+                location.pathname === '/faq' ? 'text-foreground' : 'text-muted-foreground'
               )}
             >
               {t.nav.faq}
@@ -164,12 +164,18 @@ export function Header() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 lg:gap-4">
+          <div className="flex items-center gap-1 lg:gap-2 justify-self-end">
+            {/* Search */}
+            <Button variant="ghost" size="icon" className="hidden sm:inline-flex text-muted-foreground hover:text-foreground">
+              <Search className="h-[18px] w-[18px]" />
+              <span className="sr-only">Search</span>
+            </Button>
+
             {/* Language Switcher */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                  <Globe className="h-5 w-5" />
+                  <Globe className="h-[18px] w-[18px]" />
                   <span className="sr-only">Change language</span>
                 </Button>
               </DropdownMenuTrigger>
