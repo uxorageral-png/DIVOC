@@ -3,80 +3,65 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
-import hommeHoodies from '@/assets/category-homme-hoodies.jpg';
-import hommeTshirts from '@/assets/category-homme-tshirts.jpg';
-import femmeHoodies from '@/assets/category-femme-hoodies.jpg';
-import femmeTshirts from '@/assets/category-femme-tshirts.jpg';
+import categoryHoodies from '@/assets/category-hoodies.jpg';
+import categoryTshirts from '@/assets/category-tshirts.jpg';
 
 export function FeaturedCategories() {
   const { t } = useLanguage();
 
   const categories = [
-    { eyebrow: t.nav.masculine, name: t.categories.hoodies, href: '/products/masculine/hoodies', image: hommeHoodies },
-    { eyebrow: t.nav.masculine, name: t.categories.tshirts, href: '/products/masculine/tshirts', image: hommeTshirts },
-    { eyebrow: t.nav.feminine, name: t.categories.hoodies, href: '/products/feminine/hoodies', image: femmeHoodies },
-    { eyebrow: t.nav.feminine, name: t.categories.tshirts, href: '/products/feminine/tshirts', image: femmeTshirts },
+    { 
+      name: t.categories.hoodies, 
+      href: '/products/hoodies', 
+      image: categoryHoodies 
+    },
+    { 
+      name: t.categories.tshirts, 
+      href: '/products/tshirts', 
+      image: categoryTshirts 
+    },
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-background">
+    <section className="py-24 lg:py-36 bg-secondary/40">
       <div className="container mx-auto px-4 lg:px-8">
         <FadeIn>
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10 lg:mb-14">
-            <div>
-              <span className="text-[10px] font-semibold tracking-[0.32em] uppercase text-[hsl(var(--gold-dark))]">
-                Collections
-              </span>
-              <h2 className="mt-3 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[0.95] tracking-tight text-foreground">
-                Nos Indispensables
-              </h2>
-            </div>
-            <Link
-              to="/products"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              <span className="border-b border-foreground/20 group-hover:border-foreground pb-0.5 transition-colors">
-                {t.nav.allProducts}
-              </span>
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+          <div className="text-center mb-16 lg:mb-20">
+            <span className="text-xs font-semibold tracking-[0.25em] uppercase text-primary">Collections</span>
+            <h2 className="mt-4 text-display-md font-bold tracking-tight text-foreground">
+              {t.categories.title}
+            </h2>
           </div>
         </FadeIn>
 
-        <StaggerContainer
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
-          staggerDelay={0.1}
-        >
-          {categories.map((c) => (
-            <StaggerItem key={`${c.eyebrow}-${c.name}`}>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10" staggerDelay={0.2}>
+          {categories.map((category) => (
+            <StaggerItem key={category.name}>
               <Link
-                to={c.href}
-                className="group block relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary shadow-premium-sm hover:shadow-premium-lg transition-shadow duration-500"
+                to={category.href}
+                className="group block relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary shadow-premium-md hover:shadow-premium-xl transition-shadow duration-500"
               >
                 <motion.img
-                  src={c.image}
-                  alt={`${c.eyebrow} ${c.name}`}
-                  loading="lazy"
-                  width={1024}
-                  height={1280}
+                  src={category.image}
+                  alt={category.name}
                   className="w-full h-full object-cover"
-                  whileHover={{ scale: 1.06 }}
+                  whileHover={{ scale: 1.08 }}
                   transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
-
-                <div className="absolute inset-x-0 bottom-0 p-5 lg:p-6 flex items-end justify-between">
-                  <div>
-                    <span className="block text-[10px] font-semibold tracking-[0.28em] uppercase text-background/80 mb-1.5">
-                      {c.eyebrow}
-                    </span>
-                    <h3 className="text-2xl lg:text-3xl font-display tracking-tight text-background">
-                      {c.name}
-                    </h3>
-                  </div>
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-background/40 text-background backdrop-blur-sm transition-all group-hover:bg-background group-hover:text-foreground group-hover:border-background">
-                    <ArrowRight className="h-4 w-4" />
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/20 to-transparent" />
+                
+                <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
+                  <h3 className="text-3xl lg:text-4xl font-bold text-background mb-4">
+                    {category.name}
+                  </h3>
+                  <motion.div 
+                    className="flex items-center gap-2 text-primary-glow font-medium"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <span className="text-background">{t.categories.shopNow}</span>
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
+                  </motion.div>
                 </div>
               </Link>
             </StaggerItem>
