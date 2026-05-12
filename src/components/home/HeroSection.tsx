@@ -14,9 +14,9 @@ export function HeroSection() {
   const [index, setIndex] = useState(0);
 
   const slides = [
-    { eyebrow: 'Voice of African Union', headline: t.hero.headline, sub: t.hero.subheadline, image: heroModel },
-    { eyebrow: 'Collection 2026', headline: t.hero.headline, sub: t.hero.subheadline, image: catMenHoodies },
-    { eyebrow: 'New Drop', headline: t.hero.headline, sub: t.hero.subheadline, image: catWomenHoodies },
+    { eyebrow: 'Voice of African Union', headline: t.hero.headline, sub: t.hero.subheadline, image: heroModel, position: 'right' },
+    { eyebrow: 'Collection 2026', headline: t.hero.headline, sub: t.hero.subheadline, image: catMenHoodies, position: 'center' },
+    { eyebrow: 'New Drop', headline: t.hero.headline, sub: t.hero.subheadline, image: catWomenHoodies, position: 'center' },
   ];
 
   const slide = slides[index];
@@ -26,19 +26,6 @@ export function HeroSection() {
 
   return (
     <section className="relative -mt-16 lg:-mt-20 bg-[hsl(40_30%_95%)] overflow-hidden">
-      {/* Subtle African pattern wash */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'><g fill='none' stroke='%23B8860B' stroke-width='1'><circle cx='210' cy='210' r='180'/><circle cx='210' cy='210' r='140'/><circle cx='210' cy='210' r='100'/><circle cx='210' cy='210' r='60'/><g><path d='M210 30 L220 70 L260 60 L235 95 L270 120 L225 120 L210 165 L195 120 L150 120 L185 95 L160 60 L200 70 Z'/></g></g></svg>\")",
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: '70% center',
-          backgroundSize: 'min(85vh, 780px)',
-        }}
-      />
-
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-12 pt-24 lg:pt-32 pb-16 lg:pb-20">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[calc(100vh-7rem)]">
           {/* Left: copy */}
@@ -91,7 +78,10 @@ export function HeroSection() {
                 <img
                   src={slide.image}
                   alt={slide.headline}
-                  className="w-full h-full object-cover object-center"
+                  className={cn(
+                    'w-full h-full object-cover',
+                    slide.position === 'right' ? 'object-right' : 'object-center'
+                  )}
                   width={1024}
                   height={1280}
                   fetchPriority="high"
