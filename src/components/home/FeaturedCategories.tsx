@@ -9,7 +9,7 @@ import catWomenHoodies from '@/assets/cat-women-hoodies.jpg';
 import catWomenTshirts from '@/assets/cat-women-tshirts.jpg';
 
 export function FeaturedCategories() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const categories = [
     { gender: t.nav.masculine, name: t.nav.hoodies, href: '/products/masculine/hoodies', image: catMenHoodies },
@@ -28,14 +28,14 @@ export function FeaturedCategories() {
                 {t.categories.title}
               </span>
               <h2 className="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight uppercase text-foreground">
-                {t.categories.title === 'COLLECTIONS' ? 'Nos Indispensables' : t.categories.title === 'CATEGORIES' ? 'Our Essentials' : 'Nossos Indispensáveis'}
+                {language === 'fr' ? 'Nos Indispensables' : language === 'en' ? 'Our Essentials' : 'Nossos Indispensáveis'}
               </h2>
             </div>
             <Link
               to="/products"
               className="group inline-flex items-center gap-2 text-sm font-medium tracking-wide text-foreground hover:text-[hsl(38_65%_42%)] transition-colors"
             >
-              <span>{t.categories.title === 'COLLECTIONS' ? 'Voir tous les produits' : t.categories.title === 'CATEGORIES' ? 'View all products' : 'Ver todos os produtos'}</span>
+              <span>{language === 'fr' ? 'Voir tous les produits' : language === 'en' ? 'View all products' : 'Ver todos os produtos'}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
