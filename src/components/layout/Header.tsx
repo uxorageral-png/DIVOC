@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, User, Globe, ChevronDown } from 'lucide-react';
+import { Menu, Search, User, Globe, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -13,26 +13,14 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { languages } from '@/lib/i18n';
-import { useCartStore } from '@/stores/cartStore';
 import { CartDrawer } from './CartDrawer';
 import { cn } from '@/lib/utils';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
-  const [mobileFeminineOpen, setMobileFeminineOpen] = useState(false);
-  const [mobileMasculineOpen, setMobileMasculineOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
-  const totalItems = useCartStore(state => state.getTotalItems());
-
-  const mainNavLinks = [
-    { href: '/', label: t.nav.home },
-    { href: '/lookbook', label: t.nav.lookbook || 'Lookbook' },
-    { href: '/size-guide', label: t.nav.sizeGuide || 'Size Guide' },
-    { href: '/about', label: t.nav.about },
-    { href: '/contact', label: t.nav.contact },
-  ];
 
   const feminineSubLinks = [
     { href: '/products/feminine/hoodies', label: t.nav.hoodies },
@@ -43,58 +31,63 @@ export function Header() {
     { href: '/products/masculine/tshirts', label: t.nav.tshirts },
   ];
 
-  const currentLang = languages.find(l => l.code === language);
   const isProductsActive = location.pathname.startsWith('/products');
 
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-border/60 shadow-premium-sm">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <Link 
-            to="/" 
-            className="text-2xl lg:text-3xl font-bold tracking-wider text-foreground hover:text-primary transition-colors"
-          >
-            DIVOC
-          </Link>
+  // Centered desktop links (with dropdown rendered inline for "Produits")
+  const NavLink = ({ href, label }: { href: string; label: string }) => {
+    const active = location.pathname === href;
+    return (
+      <Link
+        to={href}
+        className={cn(
+          'relative text-[13px] font-medium tracking-wide transition-colors py-2',
+          active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+        )}
+      >
+        {label}
+        {active && (
+          <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-6 rounded-full bg-[hsl(38_65%_42%)]" />
+        )}
+      </Link>
+    );
+  };
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {/* Home Link */}
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-[1fr_auto_1fr] items-center h-16 lg:h-20 gap-4">
+          {/* Logo */}
+          <div className="flex items-center">
             <Link
               to="/"
-              className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/' ? 'text-primary' : 'text-muted-foreground'
-              )}
+              className="text-2xl lg:text-[28px] font-bold tracking-[0.18em] text-foreground hover:text-[hsl(38_65%_42%)] transition-colors"
             >
-              {t.nav.home}
+              DIVOC
             </Link>
+          </div>
 
-            {/* Products Dropdown */}
+          {/* Centered Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-10 justify-center">
+            <NavLink href="/" label={t.nav.home} />
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
                   className={cn(
-                    "inline-flex items-center gap-1 bg-transparent text-sm font-medium tracking-wide transition-colors hover:text-primary focus:outline-none",
-                    isProductsActive ? 'text-primary' : 'text-muted-foreground'
+                    'relative inline-flex items-center gap-1 bg-transparent text-[13px] font-medium tracking-wide transition-colors focus:outline-none py-2',
+                    isProductsActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
                   {t.nav.products}
                   <ChevronDown className="h-3 w-3" />
+                  {isProductsActive && (
+                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-6 rounded-full bg-[hsl(38_65%_42%)]" />
+                  )}
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="bg-card border-border w-56">
+              <DropdownMenuContent align="center" className="bg-card border-border w-56">
                 <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link
-                    to="/products"
-                    className={cn(
-                      "w-full",
-                      location.pathname === '/products' ? 'text-primary bg-accent/50' : ''
-                    )}
-                  >
-                    {t.nav.allProducts}
-                  </Link>
+                  <Link to="/products">{t.nav.allProducts}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
@@ -102,15 +95,7 @@ export function Header() {
                 </DropdownMenuLabel>
                 {feminineSubLinks.map((link) => (
                   <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
-                    <Link
-                      to={link.href}
-                      className={cn(
-                        "w-full pl-4",
-                        location.pathname === link.href ? 'text-primary bg-accent/50' : ''
-                      )}
-                    >
-                      {link.label}
-                    </Link>
+                    <Link to={link.href} className="pl-4">{link.label}</Link>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator />
@@ -119,58 +104,25 @@ export function Header() {
                 </DropdownMenuLabel>
                 {masculineSubLinks.map((link) => (
                   <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
-                    <Link
-                      to={link.href}
-                      className={cn(
-                        "w-full pl-4",
-                        location.pathname === link.href ? 'text-primary bg-accent/50' : ''
-                      )}
-                    >
-                      {link.label}
-                    </Link>
+                    <Link to={link.href} className="pl-4">{link.label}</Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Other Links */}
-            <Link
-              to="/about"
-              className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'
-              )}
-            >
-              {t.nav.about}
-            </Link>
-            <Link
-              to="/contact"
-              className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/contact' ? 'text-primary' : 'text-muted-foreground'
-              )}
-            >
-              {t.nav.contact}
-            </Link>
-            <Link
-              to="/faq"
-              className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
-                location.pathname === '/faq' ? 'text-primary' : 'text-muted-foreground'
-              )}
-            >
-              {t.nav.faq}
-            </Link>
+            <NavLink href="/about" label={t.nav.about} />
+            <NavLink href="/contact" label={t.nav.contact} />
+            <NavLink href="/faq" label={t.nav.faq} />
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 lg:gap-4">
-            {/* Language Switcher */}
+          <div className="flex items-center gap-1 lg:gap-2 justify-end">
+            {/* Language */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                  <Globe className="h-5 w-5" />
-                  <span className="sr-only">Change language</span>
+                <Button variant="ghost" size="sm" className="h-9 px-2 gap-1.5 text-muted-foreground hover:text-foreground">
+                  <Globe className="h-4 w-4" />
+                  <span className="hidden sm:inline text-[11px] font-medium uppercase tracking-wider">{language}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-card border-border">
@@ -178,7 +130,7 @@ export function Header() {
                   <DropdownMenuItem
                     key={lang.code}
                     onClick={() => setLanguage(lang.code)}
-                    className={`cursor-pointer ${language === lang.code ? 'text-primary' : ''}`}
+                    className={`cursor-pointer ${language === lang.code ? 'text-[hsl(38_65%_42%)]' : ''}`}
                   >
                     <span className="mr-2">{lang.flag}</span>
                     {lang.label}
@@ -190,41 +142,39 @@ export function Header() {
             {/* Account */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                  <User className="h-5 w-5" />
+                <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground">
+                  <User className="h-[18px] w-[18px]" strokeWidth={1.6} />
                   <span className="sr-only">{t.nav.account}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-card border-border">
                 <DropdownMenuItem asChild className="cursor-pointer">
-                  <a 
-                    href="https://divoc-identity-2ev3w.myshopify.com/account/login" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
+                  <a href="https://divoc-identity-2ev3w.myshopify.com/account/login" target="_blank" rel="noopener noreferrer">
                     {t.nav.login}
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
-                  <a 
-                    href="https://divoc-identity-2ev3w.myshopify.com/account/register" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
+                  <a href="https://divoc-identity-2ev3w.myshopify.com/account/register" target="_blank" rel="noopener noreferrer">
                     {t.nav.register}
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
-                  <a 
-                    href="https://divoc-identity-2ev3w.myshopify.com/account" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
+                  <a href="https://divoc-identity-2ev3w.myshopify.com/account" target="_blank" rel="noopener noreferrer">
                     {t.nav.myAccount}
                   </a>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Search (placeholder) */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hidden sm:inline-flex h-9 w-9 text-muted-foreground hover:text-foreground"
+              aria-label="Search"
+            >
+              <Search className="h-[18px] w-[18px]" strokeWidth={1.6} />
+            </Button>
 
             {/* Cart */}
             <CartDrawer />
@@ -232,159 +182,74 @@ export function Header() {
             {/* Mobile Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                  <Menu className="h-6 w-6" />
+                <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground">
+                  <Menu className="h-5 w-5" />
                   <span className="sr-only">Menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-full sm:max-w-md bg-background border-border">
                 <div className="flex flex-col h-full pt-8">
-                  <nav className="flex flex-col gap-2">
-                    {/* Home */}
+                  <nav className="flex flex-col gap-1">
                     <Link
                       to="/"
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        "text-xl font-medium tracking-wide transition-colors hover:text-primary py-2",
-                        location.pathname === '/' ? 'text-primary' : 'text-foreground'
+                        'text-xl font-medium tracking-wide py-2.5 transition-colors',
+                        location.pathname === '/' ? 'text-[hsl(38_65%_42%)]' : 'text-foreground hover:text-[hsl(38_65%_42%)]'
                       )}
                     >
                       {t.nav.home}
                     </Link>
 
-                    {/* Products with Submenu */}
                     <div>
                       <button
                         onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
                         className={cn(
-                          "flex items-center justify-between w-full text-xl font-medium tracking-wide transition-colors hover:text-primary py-2",
-                          isProductsActive ? 'text-primary' : 'text-foreground'
+                          'flex items-center justify-between w-full text-xl font-medium tracking-wide py-2.5 transition-colors',
+                          isProductsActive ? 'text-[hsl(38_65%_42%)]' : 'text-foreground'
                         )}
                       >
                         {t.nav.products}
-                        <ChevronDown 
-                          className={cn(
-                            "h-5 w-5 transition-transform duration-200",
-                            mobileProductsOpen ? 'rotate-180' : ''
-                          )} 
-                        />
+                        <ChevronDown className={cn('h-5 w-5 transition-transform', mobileProductsOpen && 'rotate-180')} />
                       </button>
                       {mobileProductsOpen && (
                         <div className="pl-4 flex flex-col gap-1 mt-1">
-                          <Link
-                            to="/products"
-                            onClick={() => {
-                              setIsOpen(false);
-                              setMobileProductsOpen(false);
-                            }}
-                            className={cn(
-                              "text-lg font-medium tracking-wide transition-colors hover:text-primary py-2",
-                              location.pathname === '/products' ? 'text-primary' : 'text-muted-foreground'
-                            )}
-                          >
+                          <Link to="/products" onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-2">
                             {t.nav.allProducts}
                           </Link>
-
-                          {/* Feminine submenu */}
-                          <button
-                            onClick={() => setMobileFeminineOpen(!mobileFeminineOpen)}
-                            className={cn(
-                              "flex items-center justify-between w-full text-lg font-medium tracking-wide transition-colors hover:text-primary py-2",
-                              location.pathname.startsWith('/products/feminine') ? 'text-primary' : 'text-muted-foreground'
-                            )}
-                          >
-                            {t.nav.feminine}
-                            <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", mobileFeminineOpen ? 'rotate-180' : '')} />
-                          </button>
-                          {mobileFeminineOpen && (
-                            <div className="pl-4 flex flex-col gap-1">
-                              {feminineSubLinks.map((link) => (
-                                <Link
-                                  key={link.href}
-                                  to={link.href}
-                                  onClick={() => {
-                                    setIsOpen(false);
-                                    setMobileProductsOpen(false);
-                                    setMobileFeminineOpen(false);
-                                  }}
-                                  className={cn(
-                                    "text-base font-medium tracking-wide transition-colors hover:text-primary py-2",
-                                    location.pathname === link.href ? 'text-primary' : 'text-muted-foreground'
-                                  )}
-                                >
-                                  {link.label}
-                                </Link>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* Masculine submenu */}
-                          <button
-                            onClick={() => setMobileMasculineOpen(!mobileMasculineOpen)}
-                            className={cn(
-                              "flex items-center justify-between w-full text-lg font-medium tracking-wide transition-colors hover:text-primary py-2",
-                              location.pathname.startsWith('/products/masculine') ? 'text-primary' : 'text-muted-foreground'
-                            )}
-                          >
-                            {t.nav.masculine}
-                            <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", mobileMasculineOpen ? 'rotate-180' : '')} />
-                          </button>
-                          {mobileMasculineOpen && (
-                            <div className="pl-4 flex flex-col gap-1">
-                              {masculineSubLinks.map((link) => (
-                                <Link
-                                  key={link.href}
-                                  to={link.href}
-                                  onClick={() => {
-                                    setIsOpen(false);
-                                    setMobileProductsOpen(false);
-                                    setMobileMasculineOpen(false);
-                                  }}
-                                  className={cn(
-                                    "text-base font-medium tracking-wide transition-colors hover:text-primary py-2",
-                                    location.pathname === link.href ? 'text-primary' : 'text-muted-foreground'
-                                  )}
-                                >
-                                  {link.label}
-                                </Link>
-                              ))}
-                            </div>
-                          )}
+                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.feminine}</p>
+                          {feminineSubLinks.map((l) => (
+                            <Link key={l.href} to={l.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
+                              {l.label}
+                            </Link>
+                          ))}
+                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.masculine}</p>
+                          {masculineSubLinks.map((l) => (
+                            <Link key={l.href} to={l.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
+                              {l.label}
+                            </Link>
+                          ))}
                         </div>
                       )}
                     </div>
 
-                    {/* Other Links */}
-                    <Link
-                      to="/about"
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        "text-xl font-medium tracking-wide transition-colors hover:text-primary py-2",
-                        location.pathname === '/about' ? 'text-primary' : 'text-foreground'
-                      )}
-                    >
-                      {t.nav.about}
-                    </Link>
-                    <Link
-                      to="/contact"
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        "text-xl font-medium tracking-wide transition-colors hover:text-primary py-2",
-                        location.pathname === '/contact' ? 'text-primary' : 'text-foreground'
-                      )}
-                    >
-                      {t.nav.contact}
-                    </Link>
-                    <Link
-                      to="/faq"
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        "text-xl font-medium tracking-wide transition-colors hover:text-primary py-2",
-                        location.pathname === '/faq' ? 'text-primary' : 'text-foreground'
-                      )}
-                    >
-                      {t.nav.faq}
-                    </Link>
+                    {[
+                      { href: '/about', label: t.nav.about },
+                      { href: '/contact', label: t.nav.contact },
+                      { href: '/faq', label: t.nav.faq },
+                    ].map((l) => (
+                      <Link
+                        key={l.href}
+                        to={l.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          'text-xl font-medium tracking-wide py-2.5 transition-colors',
+                          location.pathname === l.href ? 'text-[hsl(38_65%_42%)]' : 'text-foreground hover:text-[hsl(38_65%_42%)]'
+                        )}
+                      >
+                        {l.label}
+                      </Link>
+                    ))}
                   </nav>
                 </div>
               </SheetContent>
