@@ -19,59 +19,60 @@ export function FeaturedCategories() {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+    <section className="py-24 lg:py-36 bg-background">
+      <div className="container mx-auto px-5 sm:px-8 lg:px-16">
         <FadeIn>
-          <div className="flex items-end justify-between mb-10 lg:mb-14 gap-6 flex-wrap">
+          <div className="flex items-end justify-between mb-14 lg:mb-20 gap-6 flex-wrap">
             <div>
-              <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.3em] uppercase text-[hsl(38_65%_42%)]">
+              <span className="inline-flex items-center gap-4 text-foreground/50 text-[10px] font-medium tracking-[0.4em] uppercase">
+                <span className="h-px w-10 bg-foreground/30" />
                 {t.categories.title}
               </span>
-              <h2 className="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight uppercase text-foreground">
+              <h2 className="mt-5 font-editorial italic text-[clamp(2rem,4vw,3.5rem)] font-normal tracking-tight text-foreground leading-[1.05]">
                 {language === 'fr' ? 'Nos Indispensables' : language === 'en' ? 'Our Essentials' : 'Nossos Indispensáveis'}
               </h2>
             </div>
             <Link
               to="/products"
-              className="group inline-flex items-center gap-2 text-sm font-medium tracking-wide text-foreground hover:text-[hsl(38_65%_42%)] transition-colors"
+              className="group inline-flex items-center gap-3 text-[11px] font-medium tracking-[0.3em] uppercase text-foreground transition-colors"
             >
-              <span>{language === 'fr' ? 'Voir tous les produits' : language === 'en' ? 'View all products' : 'Ver todos os produtos'}</span>
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <span className="border-b border-foreground pb-1">{language === 'fr' ? 'Voir tout' : language === 'en' ? 'View all' : 'Ver tudo'}</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-2" strokeWidth={1.25} />
             </Link>
           </div>
         </FadeIn>
 
         <StaggerContainer
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8"
           staggerDelay={0.1}
         >
           {categories.map((category) => (
             <StaggerItem key={category.gender + category.name}>
               <Link
                 to={category.href}
-                className="group block relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary shadow-premium-sm hover:shadow-premium-lg transition-shadow duration-500"
+                className="group block relative aspect-[3/4] overflow-hidden bg-secondary"
               >
                 <motion.img
                   src={category.image}
                   alt={`${category.gender} ${category.name}`}
                   loading="lazy"
                   className="w-full h-full object-cover"
-                  whileHover={{ scale: 1.06 }}
-                  transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/65 via-foreground/5 to-transparent" />
 
-                <div className="absolute inset-x-0 bottom-0 p-5 lg:p-6 flex items-end justify-between gap-3">
+                <div className="absolute inset-x-0 bottom-0 p-6 lg:p-7 flex items-end justify-between gap-3">
                   <div className="text-background">
-                    <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-background/70 mb-1">
+                    <p className="text-[9px] font-medium tracking-[0.35em] uppercase text-background/70 mb-2">
                       {category.gender}
                     </p>
-                    <h3 className="text-xl lg:text-2xl font-bold tracking-tight">
+                    <h3 className="text-lg lg:text-xl font-light tracking-wide uppercase">
                       {category.name}
                     </h3>
                   </div>
-                  <span className="shrink-0 h-10 w-10 rounded-full border border-background/40 flex items-center justify-center text-background backdrop-blur-sm bg-background/10 group-hover:bg-background group-hover:text-foreground transition-all duration-300">
-                    <ArrowRight className="h-4 w-4" />
+                  <span className="shrink-0 h-9 w-9 rounded-full border border-background/50 flex items-center justify-center text-background group-hover:bg-background group-hover:text-foreground transition-all duration-500">
+                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.25} />
                   </span>
                 </div>
               </Link>

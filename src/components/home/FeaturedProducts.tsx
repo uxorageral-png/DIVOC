@@ -78,16 +78,23 @@ export function FeaturedProducts() {
   }
 
   return (
-    <section className="py-20 lg:py-32 bg-background">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-24 lg:py-36 bg-background">
+      <div className="container mx-auto px-5 lg:px-16">
         <FadeIn>
-          <h2 className="text-display-md font-bold tracking-tight text-center text-foreground mb-16">
-            {t.products.featured}
-          </h2>
+          <div className="text-center mb-16 lg:mb-20">
+            <span className="inline-flex items-center gap-4 text-foreground/50 text-[10px] font-medium tracking-[0.4em] uppercase mb-5">
+              <span className="h-px w-10 bg-foreground/30" />
+              Selection
+              <span className="h-px w-10 bg-foreground/30" />
+            </span>
+            <h2 className="font-editorial italic text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight text-foreground">
+              {t.products.featured}
+            </h2>
+          </div>
         </FadeIn>
 
         <StaggerContainer 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10"
           staggerDelay={0.1}
         >
           {products.map((product) => {
@@ -109,17 +116,17 @@ export function FeaturedProducts() {
                   className="group block"
                 >
                   <motion.div 
-                    className="relative aspect-[3/4] overflow-hidden rounded-lg bg-secondary mb-4"
-                    whileHover={{ y: -8 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                    className="relative aspect-[3/4] overflow-hidden bg-secondary mb-5"
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                   >
                     {image ? (
                       <motion.img
                         src={image.url}
                         alt={image.altText || product.node.title}
                         className="w-full h-full object-cover"
-                        whileHover={{ scale: 1.08 }}
-                        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -129,14 +136,14 @@ export function FeaturedProducts() {
 
                     {/* NEW Badge - show on first 2 products */}
                     {products.indexOf(product) < 2 && (
-                      <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold tracking-wider">
+                      <Badge className="absolute top-4 left-4 bg-foreground text-background rounded-none px-2.5 py-1 text-[9px] font-medium tracking-[0.25em]">
                         {t.newBadge}
                       </Badge>
                     )}
 
                     {/* Discount Badge */}
                     {hasDiscount && (
-                      <Badge className="absolute top-3 right-3 bg-destructive text-destructive-foreground text-xs font-bold tracking-wider">
+                      <Badge className="absolute top-4 right-4 bg-background text-foreground rounded-none px-2.5 py-1 text-[9px] font-medium tracking-[0.25em] border border-foreground/10">
                         -{discountPercent}%
                       </Badge>
                     )}
@@ -146,28 +153,28 @@ export function FeaturedProducts() {
                       className="absolute bottom-4 left-4 right-4"
                       initial={{ opacity: 0, y: 20 }}
                       whileHover={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.5 }}
                     >
                       <Button
                         onClick={(e) => handleAddToCart(product, e)}
                         disabled={!isAvailable || isCartLoading}
-                        className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                        className="w-full h-11 rounded-none bg-foreground text-background hover:bg-foreground/90 text-[10px] font-medium tracking-[0.3em] uppercase"
                       >
                         {!isAvailable ? t.products.outOfStock : t.products.addToCart}
                       </Button>
                     </motion.div>
                   </motion.div>
 
-                  <h3 className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
+                  <h3 className="text-[13px] font-normal tracking-wide text-foreground mb-1.5 group-hover:opacity-60 transition-opacity">
                     {product.node.title}
                   </h3>
-                  <div className="flex items-baseline gap-2">
-                    <p className="text-primary font-semibold">
+                  <div className="flex items-baseline gap-2.5">
+                    <p className="text-[13px] text-foreground/80 font-light">
                       {product.node.priceRange.minVariantPrice.currencyCode}{' '}
                       {currentPrice.toFixed(2)}
                     </p>
                     {hasDiscount && (
-                      <p className="text-sm text-muted-foreground line-through">
+                      <p className="text-[12px] text-muted-foreground/70 line-through font-light">
                         {product.node.priceRange.minVariantPrice.currencyCode}{' '}
                         {comparePrice.toFixed(2)}
                       </p>
@@ -180,15 +187,14 @@ export function FeaturedProducts() {
         </StaggerContainer>
 
         <FadeIn delay={0.4}>
-          <div className="text-center mt-12">
-            <Button 
-              asChild 
-              variant="outline" 
-              size="lg" 
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-transform hover:scale-105"
+          <div className="text-center mt-16 lg:mt-20">
+            <Link
+              to="/products"
+              className="group inline-flex flex-col items-center gap-2 text-[11px] font-medium tracking-[0.3em] uppercase text-foreground"
             >
-              <Link to="/products">{t.nav.allProducts}</Link>
-            </Button>
+              <span>{t.nav.allProducts}</span>
+              <span className="block h-px w-full bg-foreground origin-center scale-x-100 transition-transform duration-500 group-hover:scale-x-110" />
+            </Link>
           </div>
         </FadeIn>
       </div>
