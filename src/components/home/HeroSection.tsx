@@ -25,39 +25,43 @@ export function HeroSection() {
   const next = () => setIndex((i) => (i + 1) % total);
 
   return (
-    <section className="relative -mt-16 lg:-mt-20 bg-[hsl(40_30%_95%)] overflow-hidden">
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-12 pt-24 lg:pt-32 pb-16 lg:pb-20">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[calc(100vh-7rem)]">
+    <section className="relative -mt-16 lg:-mt-[76px] bg-background overflow-hidden">
+      <div className="relative container mx-auto px-5 sm:px-8 lg:px-16 pt-28 lg:pt-40 pb-20 lg:pb-28">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-center min-h-[calc(100vh-7rem)]">
           {/* Left: copy */}
-          <div className="lg:col-span-6 order-2 lg:order-1 relative z-10">
+          <div className="lg:col-span-5 order-2 lg:order-1 relative z-10 lg:pr-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className="inline-flex items-center gap-3 mb-6 text-[hsl(38_65%_42%)] text-[10px] sm:text-[11px] font-semibold tracking-[0.32em] uppercase">
-                  <span className="h-px w-8 bg-[hsl(38_65%_42%)]/60" />
+                <span className="inline-flex items-center gap-4 mb-8 text-foreground/60 text-[10px] font-medium tracking-[0.4em] uppercase">
+                  <span className="h-px w-10 bg-foreground/30" />
                   {slide.eyebrow}
                 </span>
 
-                <h1 className="font-display text-[clamp(2.5rem,9.5vw,7.5rem)] leading-[0.92] tracking-[-0.02em] text-foreground font-extrabold uppercase [text-wrap:balance] mb-6">
+                <h1 className="font-display text-[clamp(2.75rem,7vw,5.75rem)] leading-[0.95] tracking-[0.005em] text-foreground font-normal uppercase [text-wrap:balance] mb-8">
                   {slide.headline}
                 </h1>
 
-                <p className="text-[15px] sm:text-base lg:text-lg text-muted-foreground max-w-md mb-10 leading-relaxed font-light [text-wrap:pretty]">
+                <p className="text-[14px] sm:text-[15px] text-muted-foreground/90 max-w-sm mb-12 leading-[1.8] font-light [text-wrap:pretty]">
                   {slide.sub}
                 </p>
 
                 <Button
                   asChild
-                  className="group h-12 px-8 rounded-none bg-foreground text-background hover:bg-foreground/90 text-[11px] font-semibold tracking-[0.22em] uppercase shadow-premium-md hover:shadow-premium-lg transition-all duration-300"
+                  variant="ghost"
+                  className="group h-auto p-0 rounded-none bg-transparent hover:bg-transparent text-foreground hover:text-foreground text-[11px] font-medium tracking-[0.3em] uppercase transition-all duration-500"
                 >
-                  <Link to="/products" className="inline-flex items-center gap-3">
-                    {t.hero.cta}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <Link to="/products" className="inline-flex flex-col items-start gap-2">
+                    <span className="inline-flex items-center gap-4">
+                      {t.hero.cta}
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-2" strokeWidth={1.25} />
+                    </span>
+                    <span className="block h-px w-full bg-foreground origin-left scale-x-100 transition-transform duration-500 group-hover:scale-x-110" />
                   </Link>
                 </Button>
               </motion.div>
@@ -65,15 +69,15 @@ export function HeroSection() {
           </div>
 
           {/* Right: model image */}
-          <div className="lg:col-span-6 order-1 lg:order-2 relative">
+          <div className="lg:col-span-7 order-1 lg:order-2 relative">
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 1.04 }}
+                initial={{ opacity: 0, scale: 1.06 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                className="relative aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] w-full"
+                exit={{ opacity: 0, scale: 0.99 }}
+                transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                className="relative aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] w-full overflow-hidden film-grain"
               >
                 <img
                   src={slide.image}
@@ -86,8 +90,17 @@ export function HeroSection() {
                   height={1280}
                   fetchPriority="high"
                 />
+                {/* Cinematic vignette for depth */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-foreground/25 via-transparent to-transparent" />
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-foreground/15" />
               </motion.div>
             </AnimatePresence>
+
+            {/* Editorial caption */}
+            <div className="hidden lg:flex absolute -left-2 top-8 -rotate-90 origin-top-left items-center gap-3 text-[10px] tracking-[0.4em] uppercase text-foreground/40">
+              <span className="h-px w-8 bg-foreground/30" />
+              CHAPTER 01 / FW26
+            </div>
           </div>
         </div>
 
@@ -95,31 +108,38 @@ export function HeroSection() {
         <button
           onClick={prev}
           aria-label="Previous slide"
-          className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-background/90 backdrop-blur border border-border/60 shadow-premium-sm hover:shadow-premium-md hover:bg-background transition-all"
+          className="hidden md:flex absolute left-5 lg:left-10 top-1/2 -translate-y-1/2 z-20 h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/40 backdrop-blur-sm hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-500"
         >
-          <ChevronLeft className="h-5 w-5 text-foreground" strokeWidth={1.5} />
+          <ChevronLeft className="h-4 w-4" strokeWidth={1.25} />
         </button>
         <button
           onClick={next}
           aria-label="Next slide"
-          className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-background/90 backdrop-blur border border-border/60 shadow-premium-sm hover:shadow-premium-md hover:bg-background transition-all"
+          className="hidden md:flex absolute right-5 lg:right-10 top-1/2 -translate-y-1/2 z-20 h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/40 backdrop-blur-sm hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-500"
         >
-          <ChevronRight className="h-5 w-5 text-foreground" strokeWidth={1.5} />
+          <ChevronRight className="h-4 w-4" strokeWidth={1.25} />
         </button>
 
         {/* Dots */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
           {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
               aria-label={`Go to slide ${i + 1}`}
               className={cn(
-                'h-1.5 rounded-full transition-all duration-300',
-                i === index ? 'w-8 bg-foreground' : 'w-1.5 bg-foreground/30 hover:bg-foreground/50'
+                'h-px transition-all duration-500',
+                i === index ? 'w-10 bg-foreground' : 'w-5 bg-foreground/25 hover:bg-foreground/50'
               )}
             />
           ))}
+        </div>
+
+        {/* Slide index counter — editorial detail */}
+        <div className="absolute bottom-8 right-5 lg:right-10 z-20 hidden md:flex items-baseline gap-2 text-[10px] tracking-[0.4em] uppercase text-foreground/50">
+          <span className="text-foreground font-medium">0{index + 1}</span>
+          <span className="h-px w-6 bg-foreground/30" />
+          <span>0{total}</span>
         </div>
       </div>
     </section>
