@@ -78,6 +78,7 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Bebas Neue", "Impact", "sans-serif"],
+        editorial: ['"Cormorant Garamond"', "serif"],
       },
       fontSize: {
         "display-xl": ["clamp(3rem, 8vw, 7rem)", { lineHeight: "0.95", letterSpacing: "-0.02em" }],

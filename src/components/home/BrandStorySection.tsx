@@ -9,46 +9,42 @@ export function BrandStorySection() {
   const keywords = ['Identity', 'Power', 'Roots', 'Movement', 'Legacy'];
 
   return (
-    <section className="py-20 lg:py-32 bg-background overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="py-28 lg:py-44 bg-background overflow-hidden">
+      <div className="container mx-auto px-5 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
           {/* Image */}
-          <FadeIn direction="left" distance={50}>
-            <div className="relative aspect-[4/3] lg:aspect-square overflow-hidden rounded-lg">
+          <FadeIn direction="left" distance={50} className="lg:col-span-6">
+            <div className="relative aspect-[4/5] overflow-hidden film-grain">
               <motion.img 
                 src={brandStoryImg} 
                 alt="DIVOC Brand Story" 
                 className="w-full h-full object-cover"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                whileHover={{ scale: 1.04 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-foreground/20 via-transparent to-transparent pointer-events-none" />
             </div>
           </FadeIn>
 
           {/* Content */}
-          <FadeIn direction="right" distance={50} delay={0.2}>
-            <div className="lg:pl-8">
-              <h2 className="text-display-md font-bold tracking-tight text-foreground mb-8">
+          <FadeIn direction="right" distance={50} delay={0.2} className="lg:col-span-6">
+            <div className="lg:pl-4">
+              <span className="inline-flex items-center gap-4 mb-8 text-foreground/50 text-[10px] font-medium tracking-[0.4em] uppercase">
+                <span className="h-px w-10 bg-foreground/30" />
+                Manifesto
+              </span>
+              <h2 className="font-editorial italic text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight text-foreground mb-10 [text-wrap:balance]">
                 {t.brand.title}
               </h2>
-              <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-8">
+              <p className="text-[15px] lg:text-base text-muted-foreground/90 leading-[1.9] font-light max-w-lg mb-10">
                 {t.brand.text}
               </p>
-              <StaggerContainer className="flex flex-wrap gap-4" staggerDelay={0.1} delayChildren={0.3}>
+              <StaggerContainer className="flex flex-wrap gap-x-6 gap-y-3" staggerDelay={0.08} delayChildren={0.3}>
                 {keywords.map((keyword) => (
                   <StaggerItem key={keyword}>
-                    <motion.span 
-                      className="inline-block px-4 py-2 border border-primary/30 rounded-full text-sm font-medium text-primary tracking-wide"
-                      whileHover={{ 
-                        scale: 1.05, 
-                        borderColor: 'hsl(var(--primary))',
-                        backgroundColor: 'hsl(var(--primary) / 0.1)'
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {keyword}
-                    </motion.span>
+                    <span className="text-[10px] tracking-[0.35em] uppercase text-foreground/70 font-medium">
+                      — {keyword}
+                    </span>
                   </StaggerItem>
                 ))}
               </StaggerContainer>

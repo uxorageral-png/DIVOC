@@ -21,31 +21,19 @@ export function BrandValuesSection() {
   ];
 
   return (
-    <section className="py-20 lg:py-32 bg-card border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12" staggerDelay={0.15}>
+    <section className="py-24 lg:py-32 bg-secondary/40 border-t border-border/60">
+      <div className="container mx-auto px-5 lg:px-16">
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16" staggerDelay={0.12}>
           {values.map(({ key, label, Icon }) => (
             <StaggerItem key={key}>
-              <motion.div 
-                className="text-center"
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <motion.div 
-                  className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-primary/30 mb-6"
-                  whileHover={{ 
-                    scale: 1.1, 
-                    borderColor: 'hsl(var(--primary))',
-                    boxShadow: '0 0 20px hsl(var(--primary) / 0.3)'
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Icon className="h-7 w-7 text-primary" />
-                </motion.div>
-                <h3 className="text-lg font-semibold tracking-wide text-foreground uppercase">
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-14 h-14 mb-6 transition-transform duration-500 group-hover:-translate-y-1">
+                  <Icon className="h-6 w-6 text-foreground/80" strokeWidth={1.25} />
+                </div>
+                <h3 className="text-[10px] font-medium tracking-[0.35em] text-foreground uppercase">
                   {label}
                 </h3>
-              </motion.div>
+              </div>
             </StaggerItem>
           ))}
         </StaggerContainer>
