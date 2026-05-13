@@ -40,48 +40,48 @@ export function Header() {
       <Link
         to={href}
         className={cn(
-          'relative text-[13px] font-medium tracking-wide transition-colors py-2',
+          'relative text-[11px] font-normal tracking-[0.18em] uppercase transition-colors py-2',
           active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
         )}
       >
         {label}
         {active && (
-          <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-6 rounded-full bg-[hsl(38_65%_42%)]" />
+          <span className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-px w-4 bg-foreground" />
         )}
       </Link>
     );
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-[1fr_auto_1fr] items-center h-16 lg:h-20 gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-border/40">
+      <div className="container mx-auto px-5 lg:px-12">
+        <div className="grid grid-cols-2 lg:grid-cols-[1fr_auto_1fr] items-center h-16 lg:h-[76px] gap-4">
           {/* Logo */}
           <div className="flex items-center">
             <Link
               to="/"
-              className="text-2xl lg:text-[28px] font-bold tracking-[0.18em] text-foreground hover:text-[hsl(38_65%_42%)] transition-colors"
+              className="text-[20px] lg:text-[22px] font-semibold tracking-[0.32em] text-foreground hover:opacity-70 transition-opacity"
             >
               DIVOC
             </Link>
           </div>
 
           {/* Centered Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-10 justify-center">
+          <nav className="hidden lg:flex items-center gap-12 justify-center">
             <NavLink href="/" label={t.nav.home} />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
                   className={cn(
-                    'relative inline-flex items-center gap-1 bg-transparent text-[13px] font-medium tracking-wide transition-colors focus:outline-none py-2',
+                    'relative inline-flex items-center gap-1 bg-transparent text-[11px] font-normal tracking-[0.18em] uppercase transition-colors focus:outline-none py-2',
                     isProductsActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
                   {t.nav.products}
                   <ChevronDown className="h-3 w-3" />
                   {isProductsActive && (
-                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-6 rounded-full bg-[hsl(38_65%_42%)]" />
+                    <span className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-px w-4 bg-foreground" />
                   )}
                 </button>
               </DropdownMenuTrigger>
