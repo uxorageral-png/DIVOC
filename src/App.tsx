@@ -22,6 +22,7 @@ import TermsPage from "./pages/TermsPage";
 import ShippingPage from "./pages/ShippingPage";
 import SizeGuidePage from "./pages/SizeGuidePage";
 import LookbookPage from "./pages/LookbookPage";
+import ShoesPage from "./pages/ShoesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ function AppRoutes() {
           <Route path="/products/feminine/tshirts" element={<CategoryPage gender="feminine" productType="tshirts" />} />
           <Route path="/products/masculine/hoodies" element={<CategoryPage gender="masculine" productType="hoodies" />} />
           <Route path="/products/masculine/tshirts" element={<CategoryPage gender="masculine" productType="tshirts" />} />
+          <Route path="/products/shoes" element={<ShoesPage />} />
           <Route path="/product/:handle" element={<ProductDetailPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
