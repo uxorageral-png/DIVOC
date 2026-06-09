@@ -108,6 +108,10 @@ export function Header() {
                     <Link to={link.href} className="pl-4">{link.label}</Link>
                   </DropdownMenuItem>
                 ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link to={shoesLink.href}>{shoesLink.label}</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
