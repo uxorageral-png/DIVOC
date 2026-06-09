@@ -7,6 +7,7 @@ import catMenHoodies from '@/assets/cat-men-hoodies.jpg';
 import catMenTshirts from '@/assets/cat-men-tshirts.jpg';
 import catWomenHoodies from '@/assets/cat-women-hoodies.jpg';
 import catWomenTshirts from '@/assets/cat-women-tshirts.jpg';
+import catShoes from '@/assets/cat-shoes.jpg';
 
 export function FeaturedCategories() {
   const { t, language } = useLanguage();
