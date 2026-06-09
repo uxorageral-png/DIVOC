@@ -30,6 +30,7 @@ export function Header() {
     { href: '/products/masculine/hoodies', label: t.nav.hoodies },
     { href: '/products/masculine/tshirts', label: t.nav.tshirts },
   ];
+  const shoesLink = { href: '/products/shoes', label: t.nav.shoes };
 
   const isProductsActive = location.pathname.startsWith('/products');
 
@@ -107,6 +108,10 @@ export function Header() {
                     <Link to={link.href} className="pl-4">{link.label}</Link>
                   </DropdownMenuItem>
                 ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link to={shoesLink.href}>{shoesLink.label}</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -229,6 +234,10 @@ export function Header() {
                               {l.label}
                             </Link>
                           ))}
+                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.shoes}</p>
+                          <Link to={shoesLink.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
+                            {shoesLink.label}
+                          </Link>
                         </div>
                       )}
                     </div>

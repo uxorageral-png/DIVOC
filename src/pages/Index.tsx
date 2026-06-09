@@ -5,6 +5,7 @@ import {
   BrandStorySection,
   FeaturedCategories,
   FeaturedProducts,
+  ShoesSection,
   BrandValuesSection,
 } from '@/components/home';
 
@@ -25,6 +26,7 @@ const Index = () => {
       <BrandStorySection />
       <FeaturedCategories />
       <FeaturedProducts />
+      <ShoesSection />
       <BrandValuesSection />
     </Layout>
   );
