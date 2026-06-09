@@ -7,7 +7,6 @@ import catMenHoodies from '@/assets/cat-men-hoodies.jpg';
 import catMenTshirts from '@/assets/cat-men-tshirts.jpg';
 import catWomenHoodies from '@/assets/cat-women-hoodies.jpg';
 import catWomenTshirts from '@/assets/cat-women-tshirts.jpg';
-import catShoes from '@/assets/cat-shoes.jpg';
 
 export function FeaturedCategories() {
   const { t, language } = useLanguage();
@@ -17,7 +16,6 @@ export function FeaturedCategories() {
     { gender: t.nav.masculine, name: t.nav.tshirts, href: '/products/masculine/tshirts', image: catMenTshirts },
     { gender: t.nav.feminine, name: t.nav.hoodies, href: '/products/feminine/hoodies', image: catWomenHoodies },
     { gender: t.nav.feminine, name: t.nav.tshirts, href: '/products/feminine/tshirts', image: catWomenTshirts },
-    { gender: '', name: t.nav.shoes, href: '/products/shoes', image: catShoes },
   ];
 
   return (
@@ -45,7 +43,7 @@ export function FeaturedCategories() {
         </FadeIn>
 
         <StaggerContainer
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8"
           staggerDelay={0.1}
         >
           {categories.map((category) => (
@@ -66,11 +64,9 @@ export function FeaturedCategories() {
 
                 <div className="absolute inset-x-0 bottom-0 p-6 lg:p-7 flex items-end justify-between gap-3">
                   <div className="text-background">
-                    {category.gender && (
-                      <p className="text-[9px] font-medium tracking-[0.35em] uppercase text-background/70 mb-2">
-                        {category.gender}
-                      </p>
-                    )}
+                    <p className="text-[9px] font-medium tracking-[0.35em] uppercase text-background/70 mb-2">
+                      {category.gender}
+                    </p>
                     <h3 className="text-lg lg:text-xl font-light tracking-wide uppercase">
                       {category.name}
                     </h3>
