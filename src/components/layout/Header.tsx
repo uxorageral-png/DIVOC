@@ -234,6 +234,10 @@ export function Header() {
                               {l.label}
                             </Link>
                           ))}
+                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.shoes}</p>
+                          <Link to={shoesLink.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
+                            {shoesLink.label}
+                          </Link>
                         </div>
                       )}
                     </div>
