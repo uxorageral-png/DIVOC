@@ -30,6 +30,7 @@ export function Header() {
     { href: '/products/masculine/hoodies', label: t.nav.hoodies },
     { href: '/products/masculine/tshirts', label: t.nav.tshirts },
   ];
+  const shoesLink = { href: '/products/shoes', label: t.nav.shoes };
 
   const isProductsActive = location.pathname.startsWith('/products');
 
