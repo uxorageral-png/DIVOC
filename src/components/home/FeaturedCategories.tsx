@@ -17,6 +17,7 @@ export function FeaturedCategories() {
     { gender: t.nav.masculine, name: t.nav.tshirts, href: '/products/masculine/tshirts', image: catMenTshirts },
     { gender: t.nav.feminine, name: t.nav.hoodies, href: '/products/feminine/hoodies', image: catWomenHoodies },
     { gender: t.nav.feminine, name: t.nav.tshirts, href: '/products/feminine/tshirts', image: catWomenTshirts },
+    { gender: '', name: t.nav.shoes, href: '/products/shoes', image: catShoes },
   ];
 
   return (
