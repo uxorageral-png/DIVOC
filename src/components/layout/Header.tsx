@@ -6,11 +6,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { languages } from '@/lib/i18n';
 import { CartDrawer } from './CartDrawer';
@@ -18,21 +17,26 @@ import { cn } from '@/lib/utils';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [mobileMenOpen, setMobileMenOpen] = useState(false);
+  const [mobileWomenOpen, setMobileWomenOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
 
-  const feminineSubLinks = [
-    { href: '/products/feminine/hoodies', label: t.nav.hoodies },
-    { href: '/products/feminine/tshirts', label: t.nav.tshirts },
+  // Driven by Shopify collection handles — add more by adding entries here
+  // and creating the matching collection in Shopify Admin.
+  const menLinks = [
+    { href: '/collections/men-hoodies', label: t.nav.hoodies },
+    { href: '/collections/men-tshirts', label: t.nav.tshirts },
+    { href: '/collections/men-shoes', label: t.nav.shoes },
   ];
-  const masculineSubLinks = [
-    { href: '/products/masculine/hoodies', label: t.nav.hoodies },
-    { href: '/products/masculine/tshirts', label: t.nav.tshirts },
+  const womenLinks = [
+    { href: '/collections/women-hoodies', label: t.nav.hoodies },
+    { href: '/collections/women-tshirts', label: t.nav.tshirts },
+    { href: '/collections/women-shoes', label: t.nav.shoes },
   ];
-  const shoesLink = { href: '/products/shoes', label: t.nav.shoes };
 
-  const isProductsActive = location.pathname.startsWith('/products');
+  const isMenActive = menLinks.some((l) => location.pathname === l.href);
+  const isWomenActive = womenLinks.some((l) => location.pathname === l.href);
 
   // Centered desktop links (with dropdown rendered inline for "Produits")
   const NavLink = ({ href, label }: { href: string; label: string }) => {
@@ -53,6 +57,60 @@ export function Header() {
     );
   };
 
+  const CategoryDropdown = ({
+    label,
+    active,
+    links,
+  }: {
+    label: string;
+    active: boolean;
+    links: { href: string; label: string }[];
+  }) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          className={cn(
+            'relative inline-flex items-center gap-1 bg-transparent text-[11px] font-normal tracking-[0.18em] uppercase transition-colors focus:outline-none py-2',
+            active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+          )}
+        >
+          {label}
+          <ChevronDown className="h-3 w-3" />
+          {active && (
+            <span className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-px w-4 bg-foreground" />
+          )}
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="center"
+        sideOffset={18}
+        className="w-56 rounded-none border border-border/60 bg-background shadow-[0_20px_50px_-20px_rgba(0,0,0,0.18)] p-2"
+      >
+        {links.map((link) => {
+          const isActive = location.pathname === link.href;
+          return (
+            <DropdownMenuItem
+              key={link.href}
+              asChild
+              className="cursor-pointer rounded-none focus:bg-muted/40 data-[highlighted]:bg-muted/40"
+            >
+              <Link
+                to={link.href}
+                className={cn(
+                  'flex items-center justify-between px-3 py-2.5 text-[11px] tracking-[0.18em] uppercase transition-colors',
+                  isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                )}
+              >
+                <span>{link.label}</span>
+                {isActive && <span className="h-px w-4 bg-foreground" />}
+              </Link>
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-border/40">
       <div className="container mx-auto px-5 lg:px-12">
@@ -70,51 +128,8 @@ export function Header() {
           {/* Centered Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-12 justify-center">
             <NavLink href="/" label={t.nav.home} />
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className={cn(
-                    'relative inline-flex items-center gap-1 bg-transparent text-[11px] font-normal tracking-[0.18em] uppercase transition-colors focus:outline-none py-2',
-                    isProductsActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  {t.nav.products}
-                  <ChevronDown className="h-3 w-3" />
-                  {isProductsActive && (
-                    <span className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-px w-4 bg-foreground" />
-                  )}
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="bg-card border-border w-56">
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/products">{t.nav.allProducts}</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
-                  {t.nav.feminine}
-                </DropdownMenuLabel>
-                {feminineSubLinks.map((link) => (
-                  <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
-                    <Link to={link.href} className="pl-4">{link.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
-                  {t.nav.masculine}
-                </DropdownMenuLabel>
-                {masculineSubLinks.map((link) => (
-                  <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
-                    <Link to={link.href} className="pl-4">{link.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to={shoesLink.href}>{shoesLink.label}</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
+            <CategoryDropdown label={t.nav.men} active={isMenActive} links={menLinks} />
+            <CategoryDropdown label={t.nav.women} active={isWomenActive} links={womenLinks} />
             <NavLink href="/about" label={t.nav.about} />
             <NavLink href="/contact" label={t.nav.contact} />
             <NavLink href="/faq" label={t.nav.faq} />
@@ -206,41 +221,57 @@ export function Header() {
                       {t.nav.home}
                     </Link>
 
-                    <div>
-                      <button
-                        onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                    <Collapsible open={mobileMenOpen} onOpenChange={setMobileMenOpen}>
+                      <CollapsibleTrigger
                         className={cn(
                           'flex items-center justify-between w-full text-xl font-medium tracking-wide py-2.5 transition-colors',
-                          isProductsActive ? 'text-[hsl(38_65%_42%)]' : 'text-foreground'
+                          isMenActive ? 'text-[hsl(38_65%_42%)]' : 'text-foreground'
                         )}
                       >
-                        {t.nav.products}
-                        <ChevronDown className={cn('h-5 w-5 transition-transform', mobileProductsOpen && 'rotate-180')} />
-                      </button>
-                      {mobileProductsOpen && (
-                        <div className="pl-4 flex flex-col gap-1 mt-1">
-                          <Link to="/products" onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-2">
-                            {t.nav.allProducts}
-                          </Link>
-                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.feminine}</p>
-                          {feminineSubLinks.map((l) => (
-                            <Link key={l.href} to={l.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
+                        {t.nav.men}
+                        <ChevronDown className={cn('h-5 w-5 transition-transform', mobileMenOpen && 'rotate-180')} />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                        <div className="pl-4 flex flex-col gap-1 mt-1 pb-2">
+                          {menLinks.map((l) => (
+                            <Link
+                              key={l.href}
+                              to={l.href}
+                              onClick={() => setIsOpen(false)}
+                              className="text-base text-muted-foreground hover:text-foreground py-2 pl-2"
+                            >
                               {l.label}
                             </Link>
                           ))}
-                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.masculine}</p>
-                          {masculineSubLinks.map((l) => (
-                            <Link key={l.href} to={l.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
-                              {l.label}
-                            </Link>
-                          ))}
-                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.shoes}</p>
-                          <Link to={shoesLink.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
-                            {shoesLink.label}
-                          </Link>
                         </div>
-                      )}
-                    </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+
+                    <Collapsible open={mobileWomenOpen} onOpenChange={setMobileWomenOpen}>
+                      <CollapsibleTrigger
+                        className={cn(
+                          'flex items-center justify-between w-full text-xl font-medium tracking-wide py-2.5 transition-colors',
+                          isWomenActive ? 'text-[hsl(38_65%_42%)]' : 'text-foreground'
+                        )}
+                      >
+                        {t.nav.women}
+                        <ChevronDown className={cn('h-5 w-5 transition-transform', mobileWomenOpen && 'rotate-180')} />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                        <div className="pl-4 flex flex-col gap-1 mt-1 pb-2">
+                          {womenLinks.map((l) => (
+                            <Link
+                              key={l.href}
+                              to={l.href}
+                              onClick={() => setIsOpen(false)}
+                              className="text-base text-muted-foreground hover:text-foreground py-2 pl-2"
+                            >
+                              {l.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
 
                     {[
                       { href: '/about', label: t.nav.about },
