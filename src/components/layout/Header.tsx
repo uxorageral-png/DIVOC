@@ -236,41 +236,52 @@ export function Header() {
                       {t.nav.home}
                     </Link>
 
-                    <div>
-                      <button
-                        onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                        className={cn(
-                          'flex items-center justify-between w-full text-xl font-medium tracking-wide py-2.5 transition-colors',
-                          isProductsActive ? 'text-[hsl(38_65%_42%)]' : 'text-foreground'
-                        )}
-                      >
-                        {t.nav.products}
-                        <ChevronDown className={cn('h-5 w-5 transition-transform', mobileProductsOpen && 'rotate-180')} />
-                      </button>
-                      {mobileProductsOpen && (
-                        <div className="pl-4 flex flex-col gap-1 mt-1">
-                          <Link to="/products" onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-2">
-                            {t.nav.allProducts}
-                          </Link>
-                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.feminine}</p>
-                          {feminineSubLinks.map((l) => (
-                            <Link key={l.href} to={l.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
-                              {l.label}
-                            </Link>
-                          ))}
-                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.masculine}</p>
-                          {masculineSubLinks.map((l) => (
-                            <Link key={l.href} to={l.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
-                              {l.label}
-                            </Link>
-                          ))}
-                          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mt-3 mb-1">{t.nav.shoes}</p>
-                          <Link to={shoesLink.href} onClick={() => setIsOpen(false)} className="text-base text-muted-foreground hover:text-foreground py-1.5 pl-2">
-                            {shoesLink.label}
-                          </Link>
-                        </div>
-                      )}
-                    </div>
+                    {([
+                      { id: 'men' as const, label: t.nav.masculine, active: isMenActive, open: mobileMenOpen, setOpen: setMobileMenOpen, links: menLinks },
+                      { id: 'women' as const, label: t.nav.feminine, active: isWomenActive, open: mobileWomenOpen, setOpen: setMobileWomenOpen, links: womenLinks },
+                    ]).map((group) => (
+                      <div key={group.id}>
+                        <button
+                          onClick={() => group.setOpen(!group.open)}
+                          className={cn(
+                            'flex items-center justify-between w-full text-xl font-medium tracking-wide py-2.5 transition-colors',
+                            group.active ? 'text-foreground' : 'text-foreground'
+                          )}
+                        >
+                          {group.label}
+                          <ChevronDown className={cn('h-5 w-5 transition-transform duration-300', group.open && 'rotate-180')} />
+                        </button>
+                        <AnimatePresence initial={false}>
+                          {group.open && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.25, ease: 'easeInOut' }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pl-4 flex flex-col gap-1 pb-2 pt-1">
+                                {group.links.map((l) => (
+                                  <Link
+                                    key={l.href}
+                                    to={l.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className={cn(
+                                      'text-base py-1.5 pl-2 transition-colors',
+                                      location.pathname === l.href
+                                        ? 'text-foreground'
+                                        : 'text-muted-foreground hover:text-foreground'
+                                    )}
+                                  >
+                                    {l.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
 
                     {[
                       { href: '/about', label: t.nav.about },
