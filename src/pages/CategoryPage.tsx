@@ -4,7 +4,7 @@ import { ProductGrid } from '@/components/products/ProductGrid';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 type Gender = 'feminine' | 'masculine';
-type ProductType = 'hoodies' | 'tshirts';
+type ProductType = 'hoodies' | 'tshirts' | 'shoes';
 
 interface CategoryPageProps {
   gender: Gender;
@@ -14,12 +14,14 @@ interface CategoryPageProps {
 export default function CategoryPage({ gender, productType }: CategoryPageProps) {
   const { t } = useLanguage();
 
-  const productTypeTag = productType === 'hoodies' ? 'Hoodies' : 'T-Shirts';
+  const productTypeTag =
+    productType === 'hoodies' ? 'Hoodies' : productType === 'tshirts' ? 'T-Shirts' : 'Shoes';
   const genderTag = gender === 'feminine' ? 'feminine' : 'masculine';
   const query = `product_type:${productTypeTag} AND tag:${genderTag}`;
 
   const genderLabel = gender === 'feminine' ? t.nav.feminine : t.nav.masculine;
-  const typeLabel = productType === 'hoodies' ? t.nav.hoodies : t.nav.tshirts;
+  const typeLabel =
+    productType === 'hoodies' ? t.nav.hoodies : productType === 'tshirts' ? t.nav.tshirts : t.nav.shoes;
   const title = `${genderLabel} — ${typeLabel}`;
   const canonical = `/products/${gender}/${productType}`;
 

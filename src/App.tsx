@@ -43,6 +43,8 @@ function AppRoutes() {
           <Route path="/products/feminine/tshirts" element={<CategoryPage gender="feminine" productType="tshirts" />} />
           <Route path="/products/masculine/hoodies" element={<CategoryPage gender="masculine" productType="hoodies" />} />
           <Route path="/products/masculine/tshirts" element={<CategoryPage gender="masculine" productType="tshirts" />} />
+          <Route path="/products/feminine/shoes" element={<CategoryPage gender="feminine" productType="shoes" />} />
+          <Route path="/products/masculine/shoes" element={<CategoryPage gender="masculine" productType="shoes" />} />
           <Route path="/products/shoes" element={<ShoesPage />} />
           <Route path="/product/:handle" element={<ProductDetailPage />} />
           <Route path="/about" element={<AboutPage />} />
