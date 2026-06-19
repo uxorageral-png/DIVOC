@@ -290,64 +290,6 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   return data?.data?.productByHandle || null;
 }
 
-// Fetch products for a Shopify collection by handle
-const COLLECTION_PRODUCTS_QUERY = `
-  query GetCollection($handle: String!, $first: Int!) {
-    collection(handle: $handle) {
-      id
-      title
-      description
-      products(first: $first) {
-        edges {
-          node {
-            id
-            title
-            description
-            handle
-            productType
-            priceRange { minVariantPrice { amount currencyCode } }
-            compareAtPriceRange { minVariantPrice { amount currencyCode } }
-            images(first: 5) { edges { node { url altText } } }
-            variants(first: 10) {
-              edges {
-                node {
-                  id
-                  title
-                  price { amount currencyCode }
-                  compareAtPrice { amount currencyCode }
-                  availableForSale
-                  selectedOptions { name value }
-                }
-              }
-            }
-            options { name values }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export interface ShopifyCollection {
-  title: string;
-  description: string;
-  products: ShopifyProduct[];
-}
-
-export async function fetchCollectionByHandle(
-  handle: string,
-  first: number = 50,
-): Promise<ShopifyCollection | null> {
-  const data = await storefrontApiRequest(COLLECTION_PRODUCTS_QUERY, { handle, first });
-  const collection = data?.data?.collection;
-  if (!collection) return null;
-  return {
-    title: collection.title,
-    description: collection.description ?? '',
-    products: collection.products?.edges ?? [],
-  };
-}
-
 // Cart helper functions
 function formatCheckoutUrl(checkoutUrl: string): string {
   try {

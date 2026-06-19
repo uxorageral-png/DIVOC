@@ -15,8 +15,6 @@ export const translations = {
     nav: {
       home: 'Início',
       products: 'Produtos',
-      men: 'Homem',
-      women: 'Mulher',
       allProducts: 'Todos os Produtos',
       hoodies: 'Hoodies',
       tshirts: 'T-Shirts',
@@ -160,8 +158,6 @@ export const translations = {
     nav: {
       home: 'Home',
       products: 'Products',
-      men: 'Men',
-      women: 'Women',
       allProducts: 'All Products',
       hoodies: 'Hoodies',
       tshirts: 'T-Shirts',
@@ -294,8 +290,6 @@ export const translations = {
     nav: {
       home: 'Accueil',
       products: 'Produits',
-      men: 'Homme',
-      women: 'Femme',
       allProducts: 'Tous les Produits',
       hoodies: 'Hoodies',
       tshirts: 'T-Shirts',

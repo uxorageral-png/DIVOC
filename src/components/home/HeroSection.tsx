@@ -96,6 +96,11 @@ export function HeroSection() {
               </motion.div>
             </AnimatePresence>
 
+            {/* Editorial caption */}
+            <div className="hidden lg:flex absolute -left-2 top-8 -rotate-90 origin-top-left items-center gap-3 text-[10px] tracking-[0.4em] uppercase text-foreground/40">
+              <span className="h-px w-8 bg-foreground/30" />
+              CHAPTER 01 / FW26
+            </div>
           </div>
         </div>
 
