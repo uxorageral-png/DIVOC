@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Search, User, Globe, ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -18,21 +17,25 @@ import { cn } from '@/lib/utils';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [mobileMenOpen, setMobileMenOpen] = useState(false);
+  const [mobileWomenOpen, setMobileWomenOpen] = useState(false);
+  const [hoverMenu, setHoverMenu] = useState<null | 'men' | 'women'>(null);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
 
-  const feminineSubLinks = [
-    { href: '/products/feminine/hoodies', label: t.nav.hoodies },
-    { href: '/products/feminine/tshirts', label: t.nav.tshirts },
-  ];
-  const masculineSubLinks = [
+  const menLinks = [
     { href: '/products/masculine/hoodies', label: t.nav.hoodies },
     { href: '/products/masculine/tshirts', label: t.nav.tshirts },
+    { href: '/products/masculine/shoes', label: t.nav.shoes },
   ];
-  const shoesLink = { href: '/products/shoes', label: t.nav.shoes };
+  const womenLinks = [
+    { href: '/products/feminine/hoodies', label: t.nav.hoodies },
+    { href: '/products/feminine/tshirts', label: t.nav.tshirts },
+    { href: '/products/feminine/shoes', label: t.nav.shoes },
+  ];
 
-  const isProductsActive = location.pathname.startsWith('/products');
+  const isMenActive = location.pathname.startsWith('/products/masculine');
+  const isWomenActive = location.pathname.startsWith('/products/feminine');
 
   // Centered desktop links (with dropdown rendered inline for "Produits")
   const NavLink = ({ href, label }: { href: string; label: string }) => {
@@ -53,6 +56,76 @@ export function Header() {
     );
   };
 
+  const HoverMenu = ({
+    id,
+    label,
+    active,
+    links,
+  }: {
+    id: 'men' | 'women';
+    label: string;
+    active: boolean;
+    links: { href: string; label: string }[];
+  }) => {
+    const open = hoverMenu === id;
+    return (
+      <div
+        className="relative"
+        onMouseEnter={() => setHoverMenu(id)}
+        onMouseLeave={() => setHoverMenu(null)}
+      >
+        <button
+          className={cn(
+            'relative inline-flex items-center gap-1 bg-transparent text-[11px] font-normal tracking-[0.18em] uppercase transition-colors focus:outline-none py-2',
+            active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+          )}
+          onFocus={() => setHoverMenu(id)}
+        >
+          {label}
+          {active && (
+            <span className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-px w-4 bg-foreground" />
+          )}
+        </button>
+
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              className="absolute left-1/2 -translate-x-1/2 top-full pt-3 z-50"
+            >
+              <div className="min-w-[200px] bg-background border border-border/60 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.18)]">
+                <ul className="py-3">
+                  {links.map((l) => {
+                    const isActive = location.pathname === l.href;
+                    return (
+                      <li key={l.href}>
+                        <Link
+                          to={l.href}
+                          onClick={() => setHoverMenu(null)}
+                          className={cn(
+                            'block px-5 py-2.5 text-[12px] tracking-[0.14em] uppercase transition-colors',
+                            isActive
+                              ? 'text-foreground'
+                              : 'text-muted-foreground hover:text-foreground'
+                          )}
+                        >
+                          {l.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-border/40">
       <div className="container mx-auto px-5 lg:px-12">
@@ -68,53 +141,10 @@ export function Header() {
           </div>
 
           {/* Centered Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-12 justify-center">
+          <nav className="hidden lg:flex items-center gap-10 justify-center">
             <NavLink href="/" label={t.nav.home} />
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className={cn(
-                    'relative inline-flex items-center gap-1 bg-transparent text-[11px] font-normal tracking-[0.18em] uppercase transition-colors focus:outline-none py-2',
-                    isProductsActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  {t.nav.products}
-                  <ChevronDown className="h-3 w-3" />
-                  {isProductsActive && (
-                    <span className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-px w-4 bg-foreground" />
-                  )}
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="bg-card border-border w-56">
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/products">{t.nav.allProducts}</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
-                  {t.nav.feminine}
-                </DropdownMenuLabel>
-                {feminineSubLinks.map((link) => (
-                  <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
-                    <Link to={link.href} className="pl-4">{link.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
-                  {t.nav.masculine}
-                </DropdownMenuLabel>
-                {masculineSubLinks.map((link) => (
-                  <DropdownMenuItem key={link.href} asChild className="cursor-pointer">
-                    <Link to={link.href} className="pl-4">{link.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to={shoesLink.href}>{shoesLink.label}</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
+            <HoverMenu id="men" label={t.nav.masculine} active={isMenActive} links={menLinks} />
+            <HoverMenu id="women" label={t.nav.feminine} active={isWomenActive} links={womenLinks} />
             <NavLink href="/about" label={t.nav.about} />
             <NavLink href="/contact" label={t.nav.contact} />
             <NavLink href="/faq" label={t.nav.faq} />
